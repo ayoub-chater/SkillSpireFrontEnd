@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import router from "../router";
 
 axios.defaults.withCredentials = true;
 axios.defaults.withXSRFToken=true;
@@ -22,10 +23,10 @@ export const useAuthStore = defineStore("auth", {
     },
     async getUser() {
       await this.getToken();
-      const data = await axios.get("/api/user");
-      this.authUser = data.data;
-      console.log(this.authUser) ;
-    },
+      const response = await axios.get("/api/user");
+      this.authUser = response.data;
+      return this.authUser; 
+  },
     async handleLogin(data) {
       // this.authErrors = [];
       await this.getToken();
@@ -35,8 +36,12 @@ export const useAuthStore = defineStore("auth", {
           email: data.email,
           password: data.password,
         });
-        this.router.push("/");
-      // } catch (error) {
+        console.log(this.authUser)
+        if (this.authUser.role === 'admin') {
+          router.push("/admin");
+        } else {
+          router.push("/courses");
+        }      // } catch (error) {
       //   if (error.response.status === 422) {
       //     this.authErrors = error.response.data.errors;
       //   }
@@ -102,6 +107,59 @@ export const useFomations = defineStore("formations", {
     async fetchFormations() {
       const response = await axios.get("/api/formations");
       this.formations = response.data;
+    },
+    async fetchFormationById( id ) {
+      try {
+        const response = await axios.get(`/api/formations/${id}`);
+        this.formations = response.data;
+      } catch (error) {
+        console.error('Error fetching formation:', error);
+      }
     }
   }
+});
+
+export const useAdmins = defineStore("admins", {
+  state: () => ({
+    admins: null,
+  }),
+  getters: {
+    admin: (state) => state.admin,
+  },
+  actions: {
+    async fetchprofessors() {
+      const response = await axios.get("/api/professors");
+      this.admins = response.data;
+      console.log(this.admins)
+    },
+    // async fetchFormationById( id ) {
+    //   try {
+    //     const response = await axios.get(`/api/formations/${id}`);
+    //     this.formations = response.data;
+    //   } catch (error) {
+    //     console.error('Error fetching formation:', error);
+    //   }
+    // }
+  }
+});
+
+export const useUser = defineStore("addUsers", {
+  state: () => ({
+    addUsers: null,
+  }),
+  actions: {
+    async addUser(form, role) {
+      role = role.toLowerCase();
+      const response = await axios.post(`/api/users/${role}s`, form);
+      this.addUsers = response.data;
+    },
+    async listProfessors() {
+      const response = await axios.get(`/api/users/professors`);
+      this.addUsers = response.data;
+    },
+    async listPaticipants() {
+      const response = await axios.get(`/api/users/participants`);
+      this.addUsers = response.data;
+    },
+  },
 });

@@ -50,44 +50,46 @@ onMounted(async () => {
                         <div class="row">
                             <div v-for="formation in formations" :key="formation.id" class="col-lg-6 col-sm-6">
                                 <div class="single-courses-box mb-25 box-shadow-2">
-                                    <div class="image mb-20 position-relative">
-                                        <a href="course-details.html" class="d-block">
-                                                <img src="./assets/img/all-img/course-2.png" alt="image">
-                                            </a>
-                                        <div class="cr-option">
-                                            <a href="author.html"><i class="ri-heart-fill"></i></a>
-                                            <a href="author.html"><i class="ri-shopping-basket-fill"></i></a>
-                                        </div>
-                                        <div class="cr-tag">
-                                            <a href="./course-details.html">{{ formation.center_id }} ISMAGI</a>
-                                        </div>
-                                    </div>
-                                    <div class="content">
-                                        <div class="meta-info mb-20 d-flex align-items-center justify-content-between">
-                                            <div class="author d-flex align-items-center">
-                                                <img src="./assets/img/all-img/user-2.png" alt="image">
-                                                <span>{{ formation.professor_id }} Ayoub Chater</span>
+                                    <router-link :to="'/courses/' + formation.id">
+                                        <div class="image mb-20 position-relative">
+                                            <a href="course-details.html" class="d-block">
+                                                    <img src="./assets/img/all-img/course-2.png" alt="image">
+                                                </a>
+                                            <div class="cr-option">
+                                                <a href="author.html"><i class="ri-heart-fill"></i></a>
+                                                <a href="author.html"><i class="ri-shopping-basket-fill"></i></a>
                                             </div>
-                                            <div class="cr-price">
-                                                <h5 class="fs-16"><span class="price">{{ formation.price }}/</span> <span class="old-price">$400</span></h5>
+                                            <div class="cr-tag">
+                                                <a href="./course-details.html">{{ formation.center_id }} ISMAGI</a>
                                             </div>
                                         </div>
-                                        <h3 class="mb-15 fs-20"><a href="blog-details.html">{{ formation.title }}</a></h3>
-                                        <div class="ratings mb-20">
-                                            <ul class="d-flex list-unstyle p-0">
-                                                <li><i class="ri-star-fill"></i></li>
-                                                <li><i class="ri-star-fill"></i></li>
-                                                <li><i class="ri-star-fill"></i></li>
-                                                <li><i class="ri-star-fill"></i></li>
-                                                <li><i class="ri-star-fill"></i></li>
-                                                <li><span>(45)</span></li>
-                                            </ul>
+                                        <div class="content">
+                                            <div class="meta-info mb-20 d-flex align-items-center justify-content-between">
+                                                <div class="author d-flex align-items-center">
+                                                    <img src="./assets/img/all-img/user-2.png" alt="image">
+                                                    <span>{{ formation.professor_id }} Ayoub Chater</span>
+                                                </div>
+                                                <div class="cr-price">
+                                                    <h5 class="fs-16"><span class="price">{{ formation.price }}/</span> <span class="old-price">$400</span></h5>
+                                                </div>
+                                            </div>
+                                            <h3 class="mb-15 fs-20"><a href="blog-details.html">{{ formation.title }}</a></h3>
+                                            <div class="ratings mb-20">
+                                                <ul class="d-flex list-unstyle p-0">
+                                                    <li><i class="ri-star-fill"></i></li>
+                                                    <li><i class="ri-star-fill"></i></li>
+                                                    <li><i class="ri-star-fill"></i></li>
+                                                    <li><i class="ri-star-fill"></i></li>
+                                                    <li><i class="ri-star-fill"></i></li>
+                                                    <li><span>(45)</span></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <ul class="cr-items d-flex list-unstyle">
-                                        <li class="mr-15"><i class="ri-vidicon-fill"></i> <span>(45) lesson</span> </li>
-                                        <li><i class="ri-time-line"></i> <span>10 Week</span></li>
-                                    </ul>
+                                        <ul class="cr-items d-flex list-unstyle">
+                                            <li class="mr-15"><i class="ri-vidicon-fill"></i> <span>(45) lesson</span> </li>
+                                            <li><i class="ri-time-line"></i> <span>10 Week</span></li>
+                                        </ul>
+                                    </router-link>
                                 </div>
                             </div>
                             <!-- <div class="col-lg-6 col-sm-6">

@@ -5,7 +5,6 @@ import NavBar from '../components/NavBar.vue'
 import HeaderComponent from '../components/HeaderComponent.vue'
 import CategoryComponent from '../components/CategoryComponent.vue'
 import AboutComponent from '../components/AboutComponent.vue'
-import CourseComponent from '../components/CourseComponent.vue'
 import SubscribeComponent from "../components/SubscribeComponent.vue" ;
 import FooterComponent from "../components/FooterComponent.vue" ;
 // import LoginComponent from '../components/LoginComponent'
@@ -27,7 +26,6 @@ onMounted(async () => {
     <HeaderComponent />
     <CategoryComponent />
     <AboutComponent />
-    <CourseComponent />
     <SubscribeComponent />
     <FooterComponent />
     <!-- <LoginComponent /> -->

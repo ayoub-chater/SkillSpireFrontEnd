@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import { useAuthStore } from "../stores/counter";
+// import { useAuthStore } from "../stores/counter";
 
-const authStore = useAuthStore();
+// const authStore = useAuthStore();
 
 const form = ref({
     email: "",
@@ -22,6 +22,7 @@ const form = ref({
                     </div>
                     <div class="log-from mb-30">
                         <form @submit.prevent="authStore.handleLogin(form)">
+                        <!-- <form> -->
                             <div class="form-group mb-15">
                                 <label class="label-style">Your email</label>
                                 <input type="email" v-model="form.email" placeholder="Your email" class="bg-white input-style border-style w-100 h-60">
@@ -30,21 +31,8 @@ const form = ref({
                                 <label class="label-style">Password</label>
                                 <input type="text" v-model="form.password" placeholder="Enter your password" class="bg-white input-style border-style w-100 h-60">
                             </div>
-                            <div class="meta-info d-flex justify-content-between mb-20">
-                                <div class="form-check edu-check">
-                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck4">
-                                    <label class="form-check-label edu-check-label" for="defaultCheck4">
-                                            I agree to the terms of service
-                                        </label>
-                                </div>
-                                <a href="sign-up.html">Forget password?</a>
-                            </div>
                             <button type="submit" class="btn style-one w-100 box-shadow-1">Login</button>
                         </form>
-                    </div>
-
-                    <div class="sign-link text-center">
-                        <span>Don't have an account? <a href="sign-up.html">Sign up for free</a></span>
                     </div>
                 </div>
             </div>
