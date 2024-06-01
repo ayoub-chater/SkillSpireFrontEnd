@@ -76,36 +76,36 @@
                 <span class="line"></span>
             </div>
             <li class="item">
-                <a href="#" class="link flex">
-                <i class="bx bxs-magic-wand"></i>
-                <span>Add Course</span>
-                </a>
+                <router-link to="/admin/add/Formations" class="link flex">
+                    <i class="bx bxs-magic-wand"></i>
+                    <span>Add Course</span>
+                </router-link>
             </li>
             <li class="item">
-                <a href="#" class="link flex">
-                <i class="bx bx-folder"></i>
-                <span>List Of Courses</span>
-                </a>
+                <router-link to="/admin/list/formations" class="link flex">
+                    <i class="bx bxs-magic-wand"></i>
+                    <span>List Of Courses</span>
+                </router-link>
             </li>
             </ul>
 
             
             <ul class="menu_item">
             <div class="menu_title flex">
-                <span class="title">Salles</span>
+                <span class="title">Centres</span>
                 <span class="line"></span>
             </div>
             <li class="item">
-                <a href="#" class="link flex">
-                <i class="bx bxs-magic-wand"></i>
-                <span>Add Salle</span>
-                </a>
+                <router-link to="/admin/add/Centres" class="link flex">
+                    <i class="bx bxs-magic-wand"></i>
+                    <span>Add Course</span>
+                </router-link>
             </li>
             <li class="item">
-                <a href="#" class="link flex">
-                <i class="bx bx-cloud-upload"></i>
-                <span>List Of Salles</span>
-                </a>
+                <router-link to="/admin/list/centres" class="link flex">
+                    <i class="bx bxs-magic-wand"></i>
+                    <span>List Of Centres</span>
+                </router-link>
             </li>
             </ul>
 

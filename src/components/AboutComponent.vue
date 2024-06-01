@@ -1,70 +1,70 @@
 <template>
-  <div class="about-section pb-100">
-      <div class="container">
-          <div class="main-max-width">
-              <div class="row">
-                  <div class="col-lg-6">
-                      <div class="content">
-                          <h4 class="sub-title mb-25"># About Us</h4>
-                          <h2 class="mb-50 fs-35">Why Will You Choose Our?</h2>
-                          <p class="mb-30">Delve into Insocour guided by industry experts and seasoned professionals. Our carefully curated curriculum is Designed to impart not just theoretical knowledge but practical insights gained from real-world experience.</p>
-                          <p class="mb-30">Learn by doing. Our course emphasizes hands-on projects, case studies, and interactive sessions to ensure you can apply your newfound knowledge directly to real-world scenarios.</p>
-                      </div>
-                      <div class="about-meta d-flex align-items-center mt-40">
-                          <div class="about-btn mr-20">
-                              <a href="about.html" class="btn style-one box-shadow-1">About More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                          </div>
-                          <div class="info">
-                              <div class="d-flex align-items-center">
-                                  <h5 class="count">16</h5>
-                                  <h5>+</h5>
-                              </div>
-                              <h5>Years Of Experiences</h5>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                      <div class="about-wrapper">
+    <div class="about-section pb-100">
+        <div class="container">
+            <div class="main-max-width">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="content">
+                            <h4 class="sub-title mb-25"># About Us</h4>
+                            <h2 class="mb-50 fs-35">Why Will You Choose Our?</h2>
+                            <p class="mb-30">Delve into Insocour guided by industry experts and seasoned professionals. Our carefully curated curriculum is Designed to impart not just theoretical knowledge but practical insights gained from real-world experience.</p>
+                            <p class="mb-30">Learn by doing. Our course emphasizes hands-on projects, case studies, and interactive sessions to ensure you can apply your newfound knowledge directly to real-world scenarios.</p>
+                        </div>
+                        <div class="about-meta d-flex align-items-center mt-40">
+                            <div class="about-btn mr-20">
+                                <a href="about.html" class="btn style-one box-shadow-1">About More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                            </div>
+                            <div class="info">
+                                <div class="d-flex align-items-center">
+                                    <h5 class="count">16</h5>
+                                    <h5>+</h5>
+                                </div>
+                                <h5>Years Of Experiences</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-wrapper">
 
-                          <div class="card about-card active" id="my-element1">
-                              <h4 class="heading">Learn From The Experts</h4>
-                              <div class="description">
-                                  <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
-                                  <h4>Learn From The Experts</h4>
-                                  <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
-                                  <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                              </div>
-                          </div>
+                            <div class="card about-card active" id="my-element1">
+                                <h4 class="heading">Learn From The Experts</h4>
+                                <div class="description">
+                                    <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
+                                    <h4>Learn From The Experts</h4>
+                                    <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
+                                    <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                </div>
+                            </div>
 
-                          <div class="card about-card" id="my-element2">
-                              <h4 class="heading">Seven Easy Rules Of Education</h4>
-                              <div class="description">
-                                  <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
-                                  <h4>Seven Easy Rules Of Education</h4>
-                                  <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
-                                  <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                              </div>
-                          </div>
-                          <div class="card about-card" id="my-element3">
-                              <h4 class="heading">Explore our Beliefs</h4>
-                              <div class="description">
-                                  <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
-                                  <h4>Explore our Beliefs</h4>
-                                  <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
-                                  <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                            <div class="card about-card" id="my-element2">
+                                <h4 class="heading">Seven Easy Rules Of Education</h4>
+                                <div class="description">
+                                    <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
+                                    <h4>Seven Easy Rules Of Education</h4>
+                                    <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
+                                    <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                </div>
+                            </div>
+                            <div class="card about-card" id="my-element3">
+                                <h4 class="heading">Explore our Beliefs</h4>
+                                <div class="description">
+                                    <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
+                                    <h4>Explore our Beliefs</h4>
+                                    <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
+                                    <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'AboutComponent'
+    name: 'AboutComponent'
 }
 </script>
 

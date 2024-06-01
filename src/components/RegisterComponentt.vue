@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from "vue";
 import { useAuthStore } from "../stores/counter";
+import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
+const router = useRouter();
 
 const form = ref({
     name: "",
@@ -11,7 +13,12 @@ const form = ref({
     password_confirmation: "",
 });
 
+const handleRegister = async () => {
+    await authStore.handleRegister(form.value);
+    router.push("/");
+};
 </script>
+
 
 <template>
     <div class="sign-up-section ptb-100">
@@ -23,7 +30,7 @@ const form = ref({
                         <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in action in no time. Let's go!</p>
                     </div>
                     <div class="log-from mb-30">
-                        <form @submit.prevent="authStore.handleRegister(form)">
+                        <form @submit.prevent="handleRegister">
                             <div class="form-group mb-15">
                                 <label class="label-style">Your Name</label>
                                 <input type="name" v-model="form.name" placeholder="Your Name" class="bg-white input-style border-style w-100 h-60">
@@ -48,13 +55,11 @@ const form = ref({
                                         </label>
                                 </div>
                             </div>
-                            <a class="text-decoration-none btn style-one w-100 mb-20" href="#">Create Account</a>
-                            <a class="text-decoration-none btn style-one w-100 signin" href="sign-in.html">Sign In</a>
+                            <button type="submit" class="btn style-one w-100 box-shadow-1">Register</button>
                         </form>
                     </div>
-
                     <div class="sign-link text-center">
-                        <span>Don't have an account? <a href="sign-in.html">Sign In</a></span>
+                        <span>have an account? <router-link to="/login" class="nav-link">Sign In</router-link></span>
                     </div>
                 </div>
             </div>

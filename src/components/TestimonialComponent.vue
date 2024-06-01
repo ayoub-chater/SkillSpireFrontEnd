@@ -1,111 +1,111 @@
 <template>
-  <div class="testimonial-section custom-nav pb-100">
-      <div class="container">
-          <div class="main-max-width">
-              <div class="row">
-                  <div class="col-lg-5">
-                      <div class="content">
-                          <h4 class="sub-title mb-25"># Client’s Testimonials</h4>
-                          <h2 class="mb-30 fs-35">Let's what our student says</h2>
-                          <p class="mb-50">The community created within the program is supportive and collaborative. I've had the opportunity to connect with fellow learners, share experiences, and even collaborate on projects. It truly feels like a learning journey.</p>
-                      </div>
-                  </div>
-                  <div class="col-lg-7">
-                      <div class="testimonial-cards owl-carousel owl-theme">
-                          <div class="testimonial-box">
-                              <div class="info mb-25 d-flex align-items-center justify-content-between">
-                                  <div class="image d-flex align-items-center">
-                                      <img src="assets/img/all-img/student-rev.png" alt="image">
-                                      <div class="content">
-                                          <h5 class="fs-16">Jonson Maxwell</h5>
-                                          <p class="mb-0">Customer</p>
-                                      </div>
-                                  </div>
-                                  <div class="icon">
-                                      <img src="assets/img/icon/quate-icon.svg" alt="icon">
-                                  </div>
-                              </div>
-                              <div class="box-content">
-                                  <p>The impact of consulting services was evident in the measurable results we achieved. Our organization is now better positioned for success, and our team is equipped with the knowledge and tools needed to navigate future
-                                      challenges.</p>
-                              </div>
-                              <div class="ratings">
-                                  <ul class="d-flex list-unstyle p-0">
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                  </ul>
-                              </div>
-                          </div>
-                          <div class="testimonial-box">
-                              <div class="info mb-25 d-flex align-items-center justify-content-between">
-                                  <div class="image d-flex align-items-center">
-                                    <img src="assets/img/all-img/student-rev.png" alt="image">
-                                    <div class="content">
-                                        <h5 class="fs-16">Jonson Maxwell</h5>
-                                        <p class="mb-0">Customer</p>
+    <div class="testimonial-section custom-nav pb-100">
+        <div class="container">
+            <div class="main-max-width">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="content">
+                            <h4 class="sub-title mb-25"># Client’s Testimonials</h4>
+                            <h2 class="mb-30 fs-35">Let's what our student says</h2>
+                            <p class="mb-50">The community created within the program is supportive and collaborative. I've had the opportunity to connect with fellow learners, share experiences, and even collaborate on projects. It truly feels like a learning journey.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="testimonial-cards owl-carousel owl-theme">
+                            <div class="testimonial-box">
+                                <div class="info mb-25 d-flex align-items-center justify-content-between">
+                                    <div class="image d-flex align-items-center">
+                                        <img src="assets/img/all-img/student-rev.png" alt="image">
+                                        <div class="content">
+                                            <h5 class="fs-16">Jonson Maxwell</h5>
+                                            <p class="mb-0">Customer</p>
+                                        </div>
                                     </div>
-                                  </div>
-                                  <div class="icon">
-                                      <img src="assets/img/icon/quate-icon.svg" alt="icon">
-                                  </div>
-                              </div>
-                              <div class="box-content">
-                                  <p>The impact of consulting services was evident in the measurable results we achieved. Our organization is now better positioned for success, and our team is equipped with the knowledge and tools needed to navigate future
-                                      challenges.</p>
-                              </div>
-                              <div class="ratings">
-                                  <ul class="d-flex list-unstyle p-0">
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                  </ul>
-                              </div>
-                          </div>
-                          <div class="testimonial-box">
-                              <div class="info mb-25 d-flex align-items-center justify-content-between">
-                                  <div class="image d-flex align-items-center">
-                                      <img src="assets/img/all-img/student-rev.png" alt="image">
-                                      <div class="content">
-                                          <h5 class="fs-16">Jonson Maxwell</h5>
-                                          <p class="mb-0">Customer</p>
-                                      </div>
-                                  </div>
-                                  <div class="icon">
-                                      <img src="assets/img/icon/quate-icon.svg" alt="icon">
-                                  </div>
-                              </div>
-                              <div class="box-content">
-                                  <p>The impact of consulting services was evident in the measurable results we achieved. Our organization is now better positioned for success, and our team is equipped with the knowledge and tools needed to navigate future
-                                      challenges.</p>
-                              </div>
-                              <div class="ratings">
-                                  <ul class="d-flex list-unstyle p-0">
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                      <li><i class="ri-star-fill"></i></li>
-                                  </ul>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="benefits-prev"><img src="assets/img/icon/long-arrow.svg" alt="Image"></div>
-                      <div class="benefits-next"><img src="assets/img/icon/long-arrow.svg" alt="Image"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                                    <div class="icon">
+                                        <img src="assets/img/icon/quate-icon.svg" alt="icon">
+                                    </div>
+                                </div>
+                                <div class="box-content">
+                                    <p>The impact of consulting services was evident in the measurable results we achieved. Our organization is now better positioned for success, and our team is equipped with the knowledge and tools needed to navigate future
+                                        challenges.</p>
+                                </div>
+                                <div class="ratings">
+                                    <ul class="d-flex list-unstyle p-0">
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="testimonial-box">
+                                <div class="info mb-25 d-flex align-items-center justify-content-between">
+                                    <div class="image d-flex align-items-center">
+                                        <img src="assets/img/all-img/student-rev.png" alt="image">
+                                        <div class="content">
+                                            <h5 class="fs-16">Jonson Maxwell</h5>
+                                            <p class="mb-0">Customer</p>
+                                        </div>
+                                    </div>
+                                    <div class="icon">
+                                        <img src="assets/img/icon/quate-icon.svg" alt="icon">
+                                    </div>
+                                </div>
+                                <div class="box-content">
+                                    <p>The impact of consulting services was evident in the measurable results we achieved. Our organization is now better positioned for success, and our team is equipped with the knowledge and tools needed to navigate future
+                                        challenges.</p>
+                                </div>
+                                <div class="ratings">
+                                    <ul class="d-flex list-unstyle p-0">
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="testimonial-box">
+                                <div class="info mb-25 d-flex align-items-center justify-content-between">
+                                    <div class="image d-flex align-items-center">
+                                        <img src="assets/img/all-img/student-rev.png" alt="image">
+                                        <div class="content">
+                                            <h5 class="fs-16">Jonson Maxwell</h5>
+                                            <p class="mb-0">Customer</p>
+                                        </div>
+                                    </div>
+                                    <div class="icon">
+                                        <img src="assets/img/icon/quate-icon.svg" alt="icon">
+                                    </div>
+                                </div>
+                                <div class="box-content">
+                                    <p>The impact of consulting services was evident in the measurable results we achieved. Our organization is now better positioned for success, and our team is equipped with the knowledge and tools needed to navigate future
+                                        challenges.</p>
+                                </div>
+                                <div class="ratings">
+                                    <ul class="d-flex list-unstyle p-0">
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                        <li><i class="ri-star-fill"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="benefits-prev"><img src="assets/img/icon/long-arrow.svg" alt="Image"></div>
+                        <div class="benefits-next"><img src="assets/img/icon/long-arrow.svg" alt="Image"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'TestimonialComponent'
+    name: 'TestimonialComponent'
 }
 </script>
 

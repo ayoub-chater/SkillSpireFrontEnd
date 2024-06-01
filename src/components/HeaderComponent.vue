@@ -1,136 +1,136 @@
 <template>
-  <div class="hero-section hero-bg position-relative">
-    <div class="container">
-        <div class="main-max-width">
-            <div class="hero-slider owl-carousel owl-theme">
-                <swiper
-                  navigation
-                  :slides-per-view="1"
-                  :space-between="50"
-                  @swiper="onSwiper"
-                  @slideChange="onSlideChange"
-                >
-                  <swiper-slide>
-                                <div class="silde-item">
-                                    <div class="row align-items-center">
-                                        <div class="col-lg-7">
-                                            <div class="content">
-                                                <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
-                                                <h1 class="fs-50 mb-25">Grow Your <span class="gradient-style">Skills</span> Advance Your Career Path.</h1>
-                                                <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
+    <div class="hero-section hero-bg position-relative">
+        <div class="container">
+            <div class="main-max-width">
+                <div class="hero-slider owl-carousel owl-theme">
+                    <swiper
+                    navigation
+                    :slides-per-view="1"
+                    :space-between="50"
+                    @swiper="onSwiper"
+                    @slideChange="onSlideChange"
+                    >
+                    <swiper-slide>
+                                    <div class="silde-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-7">
+                                                <div class="content">
+                                                    <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
+                                                    <h1 class="fs-50 mb-25">Grow Your <span class="gradient-style">Skills</span> Advance Your Career Path.</h1>
+                                                    <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
-                                                <div class="her-btns mt-40">
-                                                    <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                                    <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                                    <div class="her-btns mt-40">
+                                                        <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                                        <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                                    </div>
+
+                                                    <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
+                                                    <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
+                                                    <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
+                                                    <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
+                                                    <div class="shape2 moveHorizontal"><img src="./assets/img/icon/shape-2.svg" alt="image"></div>
                                                 </div>
-
-                                                <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
-                                                <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
-                                                <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
-                                                <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
-                                                <div class="shape2 moveHorizontal"><img src="./assets/img/icon/shape-2.svg" alt="image"></div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <div class="hero-image position-relative">
-                                                <img class="position-relative index-2" src="./assets/img/all-img/hero-img.png" alt="image">
+                                            <div class="col-lg-5">
+                                                <div class="hero-image position-relative">
+                                                    <img class="position-relative index-2" src="./assets/img/all-img/hero-img.png" alt="image">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                  </swiper-slide>
-                  <swiper-slide>
-                    <div class="silde-item">
-                        <div class="row align-items-center">
-                            <div class="col-lg-7">
-                                <div class="content">
-                                    <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
-                                    <h1 class="fs-50 mb-25">Welcome To <span class="gradient-style">Online</span> Education Solutions.</h1>
-                                    <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="silde-item">
+                            <div class="row align-items-center">
+                                <div class="col-lg-7">
+                                    <div class="content">
+                                        <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
+                                        <h1 class="fs-50 mb-25">Welcome To <span class="gradient-style">Online</span> Education Solutions.</h1>
+                                        <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
-                                    <div class="her-btns mt-40">
-                                        <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                        <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                        <div class="her-btns mt-40">
+                                            <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                            <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                        </div>
+
+                                        <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
+                                        <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
+                                        <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
+                                        <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
+                                        <div class="shape2 moveHorizontal"><img src="./assets/img/icon/shape-2.svg" alt="image"></div>
                                     </div>
-
-                                    <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
-                                    <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
-                                    <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
-                                    <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
-                                    <div class="shape2 moveHorizontal"><img src="./assets/img/icon/shape-2.svg" alt="image"></div>
                                 </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="hero-image position-relative">
-                                    <img class="position-relative index-2" src="./assets/img/all-img/hero-img2.png" alt="image">
+                                <div class="col-lg-5">
+                                    <div class="hero-image position-relative">
+                                        <img class="position-relative index-2" src="./assets/img/all-img/hero-img2.png" alt="image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                  </swiper-slide>
-                  <swiper-slide>
-                    <div class="silde-item">
-                        <div class="row align-items-center">
-                            <div class="col-lg-7">
-                                <div class="content">
-                                    <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
-                                    <h1 class="fs-50 mb-25">Grow Your <span class="gradient-style">Skills</span> Advance Your Career Path.</h1>
-                                    <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="silde-item">
+                            <div class="row align-items-center">
+                                <div class="col-lg-7">
+                                    <div class="content">
+                                        <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
+                                        <h1 class="fs-50 mb-25">Grow Your <span class="gradient-style">Skills</span> Advance Your Career Path.</h1>
+                                        <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
-                                    <div class="her-btns mt-40">
-                                        <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                        <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                        <div class="her-btns mt-40">
+                                            <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                            <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                        </div>
+
+                                        <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
+                                        <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
+                                        <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
+                                        <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
+                                        <div class="shape2 moveHorizontal"><img src="./assets/img/icon/shape-2.svg" alt="image"></div>
                                     </div>
-
-                                    <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
-                                    <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
-                                    <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
-                                    <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
-                                    <div class="shape2 moveHorizontal"><img src="./assets/img/icon/shape-2.svg" alt="image"></div>
                                 </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="hero-image position-relative">
-                                    <img class="position-relative index-2" src="./assets/img/all-img/hero-img.png" alt="image">
+                                <div class="col-lg-5">
+                                    <div class="hero-image position-relative">
+                                        <img class="position-relative index-2" src="./assets/img/all-img/hero-img.png" alt="image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                  </swiper-slide>
-                  <swiper-slide>
-                    <div class="silde-item">
-                        <div class="row align-items-center">
-                            <div class="col-lg-7">
-                                <div class="content">
-                                    <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
-                                    <h1 class="fs-50 mb-25">Welcome To <span class="gradient-style">Online</span> Education Solutions.</h1>
-                                    <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
+                    </swiper-slide>
+                    <swiper-slide>
+                        <div class="silde-item">
+                            <div class="row align-items-center">
+                                <div class="col-lg-7">
+                                    <div class="content">
+                                        <h4 class="sub-title mb-25">The Leader In Online Learning</h4>
+                                        <h1 class="fs-50 mb-25">Welcome To <span class="gradient-style">Online</span> Education Solutions.</h1>
+                                        <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
-                                    <div class="her-btns mt-40">
-                                        <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                        <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                        <div class="her-btns mt-40">
+                                            <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                            <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                        </div>
+
+                                        <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
+                                        <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
+                                        <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
+                                        <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
+                                        <div class="shape2 moveHorizontal"><img src="../assets/img/icon/shape-2.svg" alt="image"></div>
                                     </div>
-
-                                    <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
-                                    <div class="idea-icon"><img src="./assets/img/icon/idea.svg" alt="image"></div>
-                                    <div class="global-icon rotate"><img src="./assets/img/icon/global.svg" alt="image"></div>
-                                    <div class="shape1 rotate"><img src="./assets/img/icon/shape.svg" alt="image"></div>
-                                    <div class="shape2 moveHorizontal"><img src="../assets/img/icon/shape-2.svg" alt="image"></div>
                                 </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="hero-image position-relative">
-                                    <img class="position-relative index-2" src="../assets/img/all-img/hero-img2.png" alt="image">
+                                <div class="col-lg-5">
+                                    <div class="hero-image position-relative">
+                                        <img class="position-relative index-2" src="../assets/img/all-img/hero-img2.png" alt="image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                  </swiper-slide>
-                </swiper>
-              </div>
-          </div>
-      </div>
-  </div>
+                    </swiper-slide>
+                    </swiper>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -138,28 +138,42 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 
 export default {
-  name: 'HeaderComponent',
-  components: {
-    Swiper,
-    SwiperSlide
-  },
-  setup () {
-    const onSwiper = (swiper) => {
-      console.log(swiper)
+    name: 'HeaderComponent',
+    components: {
+        Swiper,
+        SwiperSlide
+    },
+    setup () {
+        const onSwiper = (swiper) => {
+        console.log(swiper)
+        }
+        const onSlideChange = () => {
+        console.log('slide change')
+        }
+        return {
+        onSwiper,
+        onSlideChange
+        }
     }
-    const onSlideChange = () => {
-      console.log('slide change')
-    }
-    return {
-      onSwiper,
-      onSlideChange
-    }
-  }
 }
 </script>
 
 <style scoped>
-  .hero-bg {
+.book-icon {
+    position: relative;
+    top: -100px;
+}
+.bounce {
+    position: relative;
+    top: -100px;
+}
+.silde-item {
+    padding-top: 0 !important;
+}
+.hero-section { 
+    padding-top: 60px;
+}
+.hero-bg {
     background-image: url(./assets/img/banner/1.jpg);
     background-repeat: no-repeat;
     background-size: cover;

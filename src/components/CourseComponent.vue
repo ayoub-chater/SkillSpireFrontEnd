@@ -1,18 +1,52 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useFomations } from "../stores/counter";
+import { useFomations, useInscriptions, useAuthStore } from '../stores/counter';
 
 const Fomation = useFomations();
-const formation = ref(null); 
+const authStore = useAuthStore();
+const Inscription = useInscriptions();
+const formation = ref(null);
+const CountOfFormations = ref(null);
+const userWithInfo = ref(null);
+const successModal = ref(false);
 
-const id = useRoute().path.slice(9);
+const form = ref({
+    participant_id: null,
+    formation_id: null,
+    status: 'pending',
+    payment_proof: '',
+    justification: ''
+    });
 
-onMounted(async () => {
-    await Fomation.fetchFormationById(id);
-    formation.value = Fomation.formations; 
-    console.log(formation.value);
-});
+    const route = useRoute();
+    const id = route.path.slice(9);
+
+    onMounted(async () => {
+    try {
+        await authStore.getUser();
+        await Fomation.fetchFormationById(id);
+        formation.value = Fomation.formations;
+        await Fomation.fetchFormationsByProfessor(formation.value.professor.id);
+        CountOfFormations.value = Fomation.formations.length;
+        await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
+        userWithInfo.value = authStore.userWithInfo;
+
+        form.value.participant_id = userWithInfo.value?.participant_info?.id || null;
+        form.value.formation_id = formation.value.id;
+    } catch (error) {
+        console.error('Error during setup:', error);
+    }
+    });
+
+    const submitForm = async () => {
+    try {
+        await Inscription.inscription(form.value);
+        successModal.value = true;
+    } catch (error) {
+        console.error('Error during form submission:', error);
+    }
+};
 </script>
 
 
@@ -25,19 +59,19 @@ onMounted(async () => {
                         <div class="single-course-desc">
                             <div class="single-course-image position-relative">
                                 <img src="./assets/img/all-img/course-details.png" alt="image">
-                                <a class="course-catgy">{{ formation.id }} Ismagi</a>
+                                <a class="course-catgy">{{ formation.centre.name.toUpperCase() }}</a>
                             </div>
                             <div class="single-course-content">
                                 <div class="user-details d-flex align-items-center">
                                     <div class="info-item d-flex align-items-center">
                                         <img src="./assets/img/all-img/user-3.png" alt="image">
-                                        <p class="mb-0"><a href="team-details.html">Leslie Alexander</a></p>
+                                        <p class="mb-0"><a href="team-details.html">{{ formation.professor_name.toUpperCase() }}</a></p>
                                     </div>
                                     <div class="info-item d-flex align-items-center">
-                                        <p class="mb-0"><span><i class="ri-vidicon-fill"></i></span> (45) lesson</p>
+                                        <p class="mb-0"><span><i class="ri-vidicon-fill"></i></span> Salle : {{ formation.salle.id }}</p>
                                     </div>
                                     <div class="info-item d-flex align-items-center">
-                                        <p class="mb-0"><span><i class="ri-time-line"></i></span> 10 Week</p>
+                                        <p class="mb-0"><span><i class="ri-time-line"></i></span> {{ formation.start_date.split(' ')[0] }}  =>  {{ formation.end_date.split(' ')[0] }}</p>
                                     </div>
                                     <div class="info-item d-flex align-items-center">
                                         <ul class="list-unstyle d-flex">
@@ -639,9 +673,9 @@ onMounted(async () => {
                                                 <div class="col-lg-8 col-md-8">
                                                     <div class="content">
                                                         <div class="instructor-content mb-15">
-                                                            <h3 class="fs-16">Leslie Alexander</h3>
+                                                            <h3 class="fs-16">{{ formation.professor_name.toUpperCase() }}</h3>
                                                             <div class="meta-info d-flex justify-content-between align-items-center">
-                                                                <p class="mb-0 fs-15">President of Sales</p>
+                                                                <p class="mb-0 fs-15">Professor of {{  formation.professor.expertise  }}</p>
                                                                 <ul class="list-unstyle d-flex">
                                                                     <li><i class="ri-star-fill"></i></li>
                                                                     <li><i class="ri-star-fill"></i></li>
@@ -654,7 +688,7 @@ onMounted(async () => {
 
                                                             <div class="instructor-info">
                                                                 <ul class="list-unstyle d-flex">
-                                                                    <li><span><img src="./assets/img/icon/play-icon.svg" alt="icon"></span> (20) Course</li>
+                                                                    <li><span><img src="./assets/img/icon/play-icon.svg" alt="icon"></span> ({{ CountOfFormations }}) Course</li>
                                                                     <li><span><img src="./assets/img/icon/read-icon.svg" alt="icon"></span> Category</li>
                                                                     <li><span><img src="./assets/img/icon/text-icon.svg" alt="icon"></span> 23,987 Reviews</li>
                                                                 </ul>
@@ -674,58 +708,64 @@ onMounted(async () => {
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="single-course-sidebar">
-                            <div class="course-widget">
-                                <div class="course-video">
-                                    <a href="https://www.youtube.com/watch?v=PWvPbGWVRrU" class="popup-youtube play-now ">
-                                            <i class="ri-play-fill cr-video-btn"></i>
-                                            <span class="ripple"></span>
-                                        </a>
-                                </div>
-                                <div class="sidebar-content">
-                                    <div class="meta-info d-flex align-items-center justify-content-between mb-20">
-                                        <h3>$400</h3>
-                                        <div class="share">
-                                            <img src="./assets/img/icon/share-icon.svg" alt="icon">
-                                        </div>
-                                    </div>
-                                    <h4 class="fs-20 mb-20">This Course Includes:</h4>
-                                    <ul class="courses-details">
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/time-icon.svg" alt="icon"> Course Duration</div>
-                                            <p>2 Hour 10 Min</p>
-                                        </li>
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/menu-icon.svg" alt="icon"> Category</div>
-                                            <p>Graphics Designer</p>
-                                        </li>
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/lavel-icon.svg" alt="icon"> Course Level</div>
-                                            <p>Higher</p>
-                                        </li>
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/heat-icon.svg" alt="icon"> Student Enrolled</div>
-                                            <p>50</p>
-                                        </li>
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/update-icon.svg" alt="icon"> Last Update</div>
-                                            <p>Dec 12-20-2023</p>
-                                        </li>
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/skill-icon.svg" alt="icon"> Skill Level</div>
-                                            <p>Beginner</p>
-                                        </li>
-                                        <li>
-                                            <div class="icon"><img src="./assets/img/icon/global-icon-sm.svg" alt="icon"> Language</div>
-                                            <p>English</p>
-                                        </li>
-                                    </ul>
-                                    <a href="contact.html" class="btn style-one box-shadow-1 mb-20">Buy This Course <img src="./assets/img/icon/long-arrow.svg" alt="icon"></a>
-                                    <a href="cart.html" class="btn style-one dec-clor">Add to Wishlist</a>
+        <div class="single-course-sidebar">
+            <div class="course-widget">
+                <div class="course-video">
+                    <a href="https://www.youtube.com/watch?v=PWvPbGWVRrU" class="popup-youtube play-now">
+                        <i class="ri-play-fill cr-video-btn"></i>
+                        <span class="ripple"></span>
+                    </a>
+                </div>
+                <div class="sidebar-content">
+                    <div class="meta-info d-flex align-items-center justify-content-between mb-20">
+                        <h3>{{ formation.price }}</h3>
+                        <div class="share">
+                            <img src="./assets/img/icon/share-icon.svg" alt="icon">
+                        </div>
+                    </div>
+                    <h4 class="fs-20 mb-20">This Course Includes:</h4>
+                    <ul class="courses-details">
+                        <li>
+                            <div class="icon"><img src="./assets/img/icon/menu-icon.svg" alt="icon"> Centre</div>
+                            <p>{{ formation.centre.name }}</p>
+                        </li>
+                        <li>
+                            <div class="icon"><img src="./assets/img/icon/lavel-icon.svg" alt="icon"> Salle </div>
+                            <p>{{ formation.salle.id }}</p>
+                        </li>
+                        <li>
+                            <div class="icon"><img src="./assets/img/icon/heat-icon.svg" alt="icon">Capacité</div>
+                            <p>30</p>
+                        </li>
+                        <li>
+                            <div class="icon"><img src="./assets/img/icon/skill-icon.svg" alt="icon"> Skill Level</div>
+                            <p>Beginner</p>
+                        </li>
+                        <li>
+                            <div class="icon"><img src="./assets/img/icon/global-icon-sm.svg" alt="icon"> Language</div>
+                            <p>English</p>
+                        </li>
+                    </ul>
+                    <form v-if="authStore.user" @submit.prevent="submitForm">
+                        <input type="text" class="input" v-model="form.payment_proof" placeholder="Payment Proof">
+                        <input type="text" class="input"  v-model="form.justification" placeholder="Justification">
+                        <button type="submit" class="btn style-one w-100 box-shadow-1">Buy This Course</button>
+                    </form>
+                    <router-link v-else to="/login" class="btn style-one w-100 box-shadow-1">Login For Buy This Course</router-link>                    
+                    <!-- Success Modal -->
+                    <div class="modal" tabindex="-1" role="dialog" :class="{ 'show': successModal, 'd-block': successModal }">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p>You have successfully purchased the course.</p><button type="button" class="btn style-one box-shadow-1 buy" @click="successModal = false">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
                 </div>
                 <div class="related-course pt-70">
                     <div class="course-section-title mb-30 text-center">
@@ -865,3 +905,20 @@ onMounted(async () => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.buy {
+    margin: 0 auto;
+}
+.modal-body {
+    text-align: center;
+}
+
+.input{
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #573bff;
+    margin-bottom: 10px;
+}
+</style>

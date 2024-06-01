@@ -1,35 +1,25 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useFomations, useCentres } from "../stores/counter";
+import { useRoute } from 'vue-router';
 
 const Fomations = useFomations();
 const Centres = useCentres();
 
 const formations = ref([]);
 const centres = ref([]);
-const selectedCentre = ref('');
-const searchQuery = ref('');
+
+const id = useRoute().path.slice(13);
+
+console.log(id)
 
 onMounted(async () => {
-    await Fomations.fetchFormations();
+    await Fomations.fetchFormationByParticipant(id);
     formations.value = Fomations.formations;
     await Centres.fetchCentres();
     centres.value = Centres.centres;
 });
-
-const filteredFormations = computed(() => {
-    return formations.value.filter(formation => {
-        const matchesCentre = !selectedCentre.value || formation.centre_id === selectedCentre.value;
-        const matchesSearch = formation.title.toLowerCase().includes(searchQuery.value.toLowerCase());
-        return matchesCentre && matchesSearch;
-    });
-});
-
-const filterFormationsByCentre = (centreId) => {
-    selectedCentre.value = centreId;
-};
 </script>
-
 
 
 <template>
@@ -39,22 +29,25 @@ const filterFormationsByCentre = (centreId) => {
                 <div class="edu-grid-sorting bg-fw">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6">
-                            <p class="mb-0">Showing 1-6 of {{ filteredFormations.length }} results</p>
+                            <p class="mb-0">Showing 1-8 of 54 results</p>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="fitter-option d-flex align-items-center justify-content-end">
                                 <div class="nice-select mr-20">
                                     <select>
-                                        <option>Sort By: Popularity</option>
-                                        <option>Popularity</option>
-                                        <option>Another option</option>
-                                        <option>Potato</option>
-                                    </select>
+                                            <option>Sort By: Popularity</option>
+                                            <option>Popularity</option>
+                                            <option>Another option</option>
+                                            <option>Potato</option>
+                                        </select>
                                 </div>
                                 <div class="item d-flex align-items-center">
                                     <a href="courses.html" class="d-flex align-items-center active">
                                         <div class="icon"><i class="ri-layout-grid-line"></i></div> <span>Grid</span>
                                     </a>
+                                    <!-- <a href="courses-list.html" class="d-flex align-items-center">
+                                        <div class="icon"><i class="ri-layout-grid-line"></i></div> <span>List</span>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -63,29 +56,27 @@ const filterFormationsByCentre = (centreId) => {
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row">
-                            <div v-for="formation in filteredFormations" :key="formation.id" class="col-lg-6 col-sm-6">
+                            <div v-for="formation in formations" :key="formation.id" class="col-lg-6 col-sm-6">
                                 <div class="single-courses-box mb-25 box-shadow-2">
                                     <router-link :to="'/courses/' + formation.id">
                                         <div class="image mb-20 position-relative">
                                             <a href="course-details.html" class="d-block">
-                                                <img :src="`/assets/img/all-img/${formation.image_path}`" alt="image">
-                                            </a>
+                                                <!-- <img :src="`./assets/img/all-img/${formation.image_path}`" alt="image"> -->
+                                                <img src="./assets/img/all-img/course-2.png" alt="image">
+                                                </a>
                                             <div class="cr-option">
                                                 <a href="author.html"><i class="ri-heart-fill"></i></a>
                                                 <a href="author.html"><i class="ri-shopping-basket-fill"></i></a>
                                             </div>
                                             <div class="cr-tag">
-                                                <a href="./course-details.html">{{ formation.centre.name.toUpperCase() }}</a>
+                                                <!-- <a href="./course-details.html">{{ formation.name.toUpperCase() }}</a> -->
                                             </div>
                                         </div>
                                         <div class="content">
                                             <div class="meta-info mb-20 d-flex align-items-center justify-content-between">
                                                 <div class="author d-flex align-items-center">
-                                                    <img :src="`./assets/img/all-img/${formation.professor.image_path}`" alt="image">
-                                                    <span>{{ formation.professor_name.toUpperCase() }}</span>
-                                                </div>
-                                                <div class="cr-price">
-                                                    <h5 class="fs-16"><span class="price">{{ formation.price }}/</span> <span class="old-price">$400</span></h5>
+                                                    <!-- <img :src="`./assets/img/all-img/${formation.professor.image_path}`" alt="image"> -->
+                                                    <!-- <span>{{ formation.professor_name.toUpperCase() }}</span> -->
                                                 </div>
                                             </div>
                                             <h3 class="mb-15 fs-20"><a href="blog-details.html">{{ formation.title }}</a></h3>
@@ -101,7 +92,7 @@ const filterFormationsByCentre = (centreId) => {
                                             </div>
                                         </div>
                                         <ul class="cr-items d-flex list-unstyle">
-                                            <li class="mr-15"><i class="ri-vidicon-fill"></i> <span>Salle : {{ formation.salle.id }}</span> </li>
+                                            <!-- <li class="mr-15"><i class="ri-vidicon-fill"></i> <span>Salle : {{ formation.salle.id }}</span> </li> -->
                                             <li><i class="ri-time-line"></i> <span>{{ formation.start_date.split(' ')[0] }}  =>  {{ formation.end_date.split(' ')[0] }}</span></li>
                                         </ul>
                                     </router-link>
@@ -112,29 +103,25 @@ const filterFormationsByCentre = (centreId) => {
                     <div class="col-lg-4">
                         <aside class="course-sidebar-widgets">
                             <div class="widget widget-catgory widget-search">
-                                <form class="search-form" @submit.prevent>
+                                <form class="search-form">
                                     <label>
-                                        <input type="search" class="search-field" v-model="searchQuery" placeholder="Search...">
-                                    </label>
+                                            <input type="search" class="search-field" placeholder="Search...">
+                                        </label>
                                     <button class="widget-search-btn" type="submit"><i class="ri-search-line"></i></button>
                                 </form>
+
                                 <div class="accordion" id="widget-collps">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                                Centres
-                                            </button>
+                                                    Centres
+                                                </button>
                                         </h2>
                                         <div id="collapseOne" class="widget-collapse collapse show" data-bs-parent="#widget-collps">
                                             <div class="widget-collps-body">
                                                 <ul>
-                                                    <li>
-                                                        <a @click="filterFormationsByCentre('')">
-                                                            <p>All Centres</p>
-                                                        </a>
-                                                    </li>
                                                     <li v-for="centre in centres" :key="centre.id">
-                                                        <a @click="filterFormationsByCentre(centre.id)">
+                                                        <a>
                                                             <p>{{ centre.name }}</p> <span>({{ centre.formations_count }})</span>
                                                         </a>
                                                     </li>
@@ -144,122 +131,10 @@ const filterFormationsByCentre = (centreId) => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="widget widget-checkbox">
-                                <div class="accordion" id="widget-collps-two">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                                    Level
-                                                </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="widget-collapse collapse show" data-bs-parent="#widget-collps-two">
-                                            <div class="widget-collps-body">
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck2">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck2">
-                                                            Beginner
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck3">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck3">
-                                                            Advanced
-                                                        </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-rating">
-                                <div class="accordion" id="widget-collps-three">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                                                    Rating
-                                                </button>
-                                        </h2>
-                                        <div id="collapseThree" class="widget-collapse collapse show" data-bs-parent="#widget-collps-three">
-                                            <div class="widget-collps-body">
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck4">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck4">
-                                                        <span><i class="ri-star-fill"></i></span> 5 Star
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck5">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck5">
-                                                            <span><i class="ri-star-fill"></i></span> 4 Star or adobe
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck6">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck6">
-                                                            <span><i class="ri-star-fill"></i></span> 3 Star or adobe
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck7">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck7">
-                                                            <span><i class="ri-star-fill"></i></span> 2 Star or adobe
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck8">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck8">
-                                                            <span><i class="ri-star-fill"></i></span> 1 Star or adobe
-                                                        </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget filter-widget">
-                                <h3 class="widget-title">Price Filter</h3>
-                                <div class="filter-info">
-                                    <div class="filter-bar">
-                                        <div class="price-range-slider">
-                                            <div id="slider-range" class="range-bar"></div>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <p class="range-value mb-0 d-flex align-items-center">
-                                                    <input type="text" id="amount" readonly>
-                                                </p>
-                                                <a class="btn-filter" href="courses.html">Filter</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-tag-cloud">
-                                <div class="accordion" id="widget-collps-four">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
-                                                    Popular Tags
-                                                </button>
-                                        </h2>
-                                        <div id="collapseFour" class="widget-collapse collapse show" data-bs-parent="#widget-collps-four">
-                                            <div class="widget-collps-body">
-                                                <div class="tagcloud">
-                                                    <a href="tag.html">Business</a>
-                                                    <a href="tag.html">Course</a>
-                                                    <a href="tag.html">Consulting</a>
-                                                    <a href="tag.html">Online</a>
-                                                    <a href="tag.html">Remote</a>
-                                                    <a href="tag.html">Solution</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </aside>
                     </div>
                 </div>
 
-                <!-- Pagination -->
                 <ul class="page-nav list-style text-start p-0 mt-40">
                     <li><a href="courses.html"><img src="./assets/img/icon/long-arrow.svg" alt="icon"></a></li>
                     <li><a class="active" href="courses.html">01</a></li>
@@ -273,8 +148,7 @@ const filterFormationsByCentre = (centreId) => {
     </div>
 </template>
 
-
-<style>
+<style scoped>
 .course-section .sorting-menu {
     position: absolute;
     bottom: 5px;

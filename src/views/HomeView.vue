@@ -1,15 +1,14 @@
 
 <script setup>
-// import NavbarComponent from '../components/NavbarComponent.vue'
 import NavBar from '../components/NavBar.vue'
 import HeaderComponent from '../components/HeaderComponent.vue'
 import CategoryComponent from '../components/CategoryComponent.vue'
 import AboutComponent from '../components/AboutComponent.vue'
+import HomeCoursesComponent from '../components/HomeCoursesComponent.vue'
 import SubscribeComponent from "../components/SubscribeComponent.vue" ;
 import FooterComponent from "../components/FooterComponent.vue" ;
 // import LoginComponent from '../components/LoginComponent'
 import { onMounted } from "vue";
-// import { useAuthStore } from "../stores/auth";
 import { useAuthStore } from "../stores/counter"
 
 const authStore = useAuthStore();
@@ -26,6 +25,7 @@ onMounted(async () => {
     <HeaderComponent />
     <CategoryComponent />
     <AboutComponent />
+    <HomeCoursesComponent />
     <SubscribeComponent />
     <FooterComponent />
     <!-- <LoginComponent /> -->

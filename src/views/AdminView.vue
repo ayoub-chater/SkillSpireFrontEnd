@@ -35,10 +35,4 @@ onMounted(async () => {
 
 <template>
     <SidebarAdminComponent />
-
-<!-- <NavBar /> -->
-    <!-- <BannerComponent /> -->
-    <!-- <SubscribeComponent /> -->
-    <!-- <FooterComponent /> -->
-
 </template>

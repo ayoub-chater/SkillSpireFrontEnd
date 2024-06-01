@@ -1,15 +1,33 @@
 <script setup>
 import { ref } from "vue";
-// import { useAuthStore } from "../stores/counter";
+import { useAuthStore } from "../stores/counter";
+import { useRouter } from "vue-router";
 
-// const authStore = useAuthStore();
+const authStore = useAuthStore();
+const router = useRouter();
 
 const form = ref({
     email: "",
     password: "",
 });
 
+const handleLogin = async () => {
+    await authStore.handleLogin(form.value);
+    await authStore.getUser();
+    const user = authStore.user;
+    console.log(user)
+    if (user) {
+        if (user.role === 'participants') {
+            router.push("/");
+        } else if (user.role === 'professors') {
+            router.push(`/professor/${user.id}`);
+        } else if (user.role === 'admins') {
+            router.push("/admin/");
+        }
+    }
+};
 </script>
+
 
 <template>
     <div class="sign-in-section ptb-100">
@@ -21,8 +39,7 @@ const form = ref({
                         <p>Hey there! Ready to log in? Just enter your username and password below and you'll be back in action in no time. Let's go!</p>
                     </div>
                     <div class="log-from mb-30">
-                        <form @submit.prevent="authStore.handleLogin(form)">
-                        <!-- <form> -->
+                        <form @submit.prevent="handleLogin(form)">
                             <div class="form-group mb-15">
                                 <label class="label-style">Your email</label>
                                 <input type="email" v-model="form.email" placeholder="Your email" class="bg-white input-style border-style w-100 h-60">
@@ -33,6 +50,9 @@ const form = ref({
                             </div>
                             <button type="submit" class="btn style-one w-100 box-shadow-1">Login</button>
                         </form>
+                    </div>
+                    <div class="sign-link text-center">
+                        <span>Don't have an account? <router-link to="/register" class="nav-link">Sign Up</router-link></span>
                     </div>
                 </div>
             </div>

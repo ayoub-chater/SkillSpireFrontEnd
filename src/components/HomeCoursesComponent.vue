@@ -1,75 +1,48 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue';
-import { useFomations, useCentres } from "../stores/counter";
+import { useFomations } from "../stores/counter";
 
 const Fomations = useFomations();
-const Centres = useCentres();
-
 const formations = ref([]);
-const centres = ref([]);
-const selectedCentre = ref('');
-const searchQuery = ref('');
 
 onMounted(async () => {
     await Fomations.fetchFormations();
     formations.value = Fomations.formations;
-    await Centres.fetchCentres();
-    centres.value = Centres.centres;
+    console.log(formations.value);
 });
 
-const filteredFormations = computed(() => {
-    return formations.value.filter(formation => {
-        const matchesCentre = !selectedCentre.value || formation.centre_id === selectedCentre.value;
-        const matchesSearch = formation.title.toLowerCase().includes(searchQuery.value.toLowerCase());
-        return matchesCentre && matchesSearch;
-    });
+const limitedFormations = computed(() => {
+    return formations.value.slice(0, 6);
 });
-
-const filterFormationsByCentre = (centreId) => {
-    selectedCentre.value = centreId;
-};
 </script>
 
 
-
 <template>
-    <div class="courses-section ptb-100">
+    <div class="course-section pb-100">
         <div class="container">
             <div class="main-max-width">
-                <div class="edu-grid-sorting bg-fw">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-md-6">
-                            <p class="mb-0">Showing 1-6 of {{ filteredFormations.length }} results</p>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="fitter-option d-flex align-items-center justify-content-end">
-                                <div class="nice-select mr-20">
-                                    <select>
-                                        <option>Sort By: Popularity</option>
-                                        <option>Popularity</option>
-                                        <option>Another option</option>
-                                        <option>Potato</option>
-                                    </select>
-                                </div>
-                                <div class="item d-flex align-items-center">
-                                    <a href="courses.html" class="d-flex align-items-center active">
-                                        <div class="icon"><i class="ri-layout-grid-line"></i></div> <span>Grid</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                <div class="section-title mb-50 position-relative">
+                    <h4 class="sub-title mb-25"># Our Courses List</h4>
+                    <h2 class="fs-35">Broad Selection Of Course</h2>
+
+                    <div class="sorting-menu">
+                        <ul>
+                            <li class="filter active" data-filter="all">All Courses</li>
+                            <li class="filter" data-filter=".Design">UI&UX Design</li>
+                            <li class="filter" data-filter=".Business">Business</li>
+                            <li class="filter" data-filter=".Development">Development</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div v-for="formation in filteredFormations" :key="formation.id" class="col-lg-6 col-sm-6">
+                <div id="mix-wrapper" class="course-mix-wrapper">
+                    <div class="row">
+                            <div v-for="formation in limitedFormations" :key="formation.id" class="col-lg-4 col-sm-6">
                                 <div class="single-courses-box mb-25 box-shadow-2">
                                     <router-link :to="'/courses/' + formation.id">
                                         <div class="image mb-20 position-relative">
                                             <a href="course-details.html" class="d-block">
-                                                <img :src="`/assets/img/all-img/${formation.image_path}`" alt="image">
-                                            </a>
+                                                <img :src="`./assets/img/all-img/${formation.image_path}`" alt="image">
+                                                </a>
                                             <div class="cr-option">
                                                 <a href="author.html"><i class="ri-heart-fill"></i></a>
                                                 <a href="author.html"><i class="ri-shopping-basket-fill"></i></a>
@@ -108,173 +81,17 @@ const filterFormationsByCentre = (centreId) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <aside class="course-sidebar-widgets">
-                            <div class="widget widget-catgory widget-search">
-                                <form class="search-form" @submit.prevent>
-                                    <label>
-                                        <input type="search" class="search-field" v-model="searchQuery" placeholder="Search...">
-                                    </label>
-                                    <button class="widget-search-btn" type="submit"><i class="ri-search-line"></i></button>
-                                </form>
-                                <div class="accordion" id="widget-collps">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                                Centres
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" class="widget-collapse collapse show" data-bs-parent="#widget-collps">
-                                            <div class="widget-collps-body">
-                                                <ul>
-                                                    <li>
-                                                        <a @click="filterFormationsByCentre('')">
-                                                            <p>All Centres</p>
-                                                        </a>
-                                                    </li>
-                                                    <li v-for="centre in centres" :key="centre.id">
-                                                        <a @click="filterFormationsByCentre(centre.id)">
-                                                            <p>{{ centre.name }}</p> <span>({{ centre.formations_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-checkbox">
-                                <div class="accordion" id="widget-collps-two">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                                    Level
-                                                </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="widget-collapse collapse show" data-bs-parent="#widget-collps-two">
-                                            <div class="widget-collps-body">
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck2">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck2">
-                                                            Beginner
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck3">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck3">
-                                                            Advanced
-                                                        </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-rating">
-                                <div class="accordion" id="widget-collps-three">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                                                    Rating
-                                                </button>
-                                        </h2>
-                                        <div id="collapseThree" class="widget-collapse collapse show" data-bs-parent="#widget-collps-three">
-                                            <div class="widget-collps-body">
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck4">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck4">
-                                                        <span><i class="ri-star-fill"></i></span> 5 Star
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck5">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck5">
-                                                            <span><i class="ri-star-fill"></i></span> 4 Star or adobe
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck6">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck6">
-                                                            <span><i class="ri-star-fill"></i></span> 3 Star or adobe
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck7">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck7">
-                                                            <span><i class="ri-star-fill"></i></span> 2 Star or adobe
-                                                        </label>
-                                                </div>
-                                                <div class="form-check edu-check">
-                                                    <input class="form-check-input edu-check-input" type="checkbox" value="" id="defaultCheck8">
-                                                    <label class="form-check-label edu-check-label" for="defaultCheck8">
-                                                            <span><i class="ri-star-fill"></i></span> 1 Star or adobe
-                                                        </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget filter-widget">
-                                <h3 class="widget-title">Price Filter</h3>
-                                <div class="filter-info">
-                                    <div class="filter-bar">
-                                        <div class="price-range-slider">
-                                            <div id="slider-range" class="range-bar"></div>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <p class="range-value mb-0 d-flex align-items-center">
-                                                    <input type="text" id="amount" readonly>
-                                                </p>
-                                                <a class="btn-filter" href="courses.html">Filter</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget widget-tag-cloud">
-                                <div class="accordion" id="widget-collps-four">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
-                                                    Popular Tags
-                                                </button>
-                                        </h2>
-                                        <div id="collapseFour" class="widget-collapse collapse show" data-bs-parent="#widget-collps-four">
-                                            <div class="widget-collps-body">
-                                                <div class="tagcloud">
-                                                    <a href="tag.html">Business</a>
-                                                    <a href="tag.html">Course</a>
-                                                    <a href="tag.html">Consulting</a>
-                                                    <a href="tag.html">Online</a>
-                                                    <a href="tag.html">Remote</a>
-                                                    <a href="tag.html">Solution</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </aside>
-                    </div>
                 </div>
-
-                <!-- Pagination -->
-                <ul class="page-nav list-style text-start p-0 mt-40">
-                    <li><a href="courses.html"><img src="./assets/img/icon/long-arrow.svg" alt="icon"></a></li>
-                    <li><a class="active" href="courses.html">01</a></li>
-                    <li><a href="courses.html">02</a></li>
-                    <li><a href="courses.html">03</a></li>
-                    <li><a href="courses.html">04</a></li>
-                    <li><a href="courses.html"><img src="./assets/img/icon/long-arrow.svg" alt="icon"></a></li>
-                </ul>
             </div>
         </div>
     </div>
 </template>
 
-
 <style>
+
+.course-mix-wrapper .mix-target {
+    display: block !important;
+}
 .course-section .sorting-menu {
     position: absolute;
     bottom: 5px;
@@ -626,6 +443,7 @@ const filterFormationsByCentre = (centreId) => {
     line-height: 40px;
     border-radius: 30px;
     font-size: 15px;
+    float: unset;
     -webkit-transition: var(--transition);
     transition: var(--transition);
 }
@@ -1590,499 +1408,5 @@ a.course-set:last-child {
 
 .sidebar-content .btn.dec-clor:hover img {
     filter: brightness(0) invert(1);
-}
-
-.widget {
-    background-color: var(--whiteColor);
-    padding: 30px 20px;
-    margin-bottom: 30px;
-    border: 1px solid var(--borderColor);
-    border-radius: 5px;
-}
-
-.widget:last-child {
-    margin-bottom: 0px;
-}
-
-.widget-search form {
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.widget .accordion-button {
-    padding: 0;
-    border: none;
-}
-
-.widget .accordion-button:focus {
-    box-shadow: none;
-}
-
-.widget .accordion-button:not(.collapsed) {
-    background-color: transparent;
-    box-shadow: none;
-}
-
-.widget .accordion-item {
-    border: none;
-}
-
-.widget-search form label {
-    display: block;
-    margin-bottom: 0;
-}
-
-.widget-search form .search-field {
-    height: 60px;
-    display: block;
-    width: 100%;
-    border: none;
-    border-radius: 60px;
-    padding: 2px 0 0 15px;
-    border: 1px solid var(--borderColor);
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-    font-weight: 400;
-}
-
-.widget-search form .search-field::-webkit-input-placeholder {
-    color: #999999;
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-}
-
-.widget-search form .search-field:-ms-input-placeholder {
-    color: #999999;
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-}
-
-.widget-search form .search-field::-ms-input-placeholder {
-    color: #999999;
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-}
-
-.widget-search form .search-field::placeholder {
-    color: #999999;
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-}
-
-.widget-search form .search-field:focus::-webkit-input-placeholder {
-    color: transparent;
-}
-
-.widget-search form .search-field:focus:-ms-input-placeholder {
-    color: transparent;
-}
-
-.widget-search form .search-field:focus::-ms-input-placeholder {
-    color: transparent;
-}
-
-.widget-search form .search-field:focus::placeholder {
-    color: transparent;
-}
-
-.widget-search form .widget-search-btn {
-    top: 8px;
-    right: 20px;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-    font-size: 25px;
-    line-height: 44px;
-    position: absolute;
-    color: var(--paraColor);
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-    background-color: transparent;
-}
-
-.widget-search form .widget-search-btn:hover {
-    color: var(--primaryColor);
-}
-
-.widget-title {
-    font-size: 20px;
-    margin-bottom: 25px;
-    font-weight: 600;
-    padding-bottom: 25px !important;
-    color: var(--mainColor) !important;
-    border-bottom: 1px solid var(--borderColor) !important;
-}
-
-.widget-catgory ul {
-    list-style: none;
-    padding: 0;
-}
-
-.widget-catgory ul li a {
-    padding: 12px 20px;
-    background-color: var(--offWhiteColor);
-    border-radius: 50px;
-    transition: var(--transition);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--paraColor);
-    margin-bottom: 18px;
-}
-
-.widget-catgory ul li p {
-    margin-bottom: 0px;
-}
-
-.widget-catgory ul li a:hover {
-    background-color: var(--primaryColor);
-    color: var(--whiteColor);
-}
-
-.widget-catgory ul li i {
-    font-size: 28px;
-}
-
-.filter-widget .widget-title {
-    margin-bottom: 0px;
-    font-weight: 600;
-    padding-bottom: 0px !important;
-    color: var(--mainColor) !important;
-    border-bottom: none !important;
-}
-
-.widget.filter-widget .btn-filter {
-    background: transparent;
-    border: 1px solid var(--borderColor);
-    padding: 3px 20px;
-    font-weight: 600;
-    border-radius: 5px;
-    transition: var(--transition);
-}
-
-.widget.filter-widget .btn-filter:hover {
-    background: var(--primaryColor);
-    border: 1px solid var(--primaryColor);
-    color: var(--whiteColor);
-}
-
-.filter-info .filter-bar .price-range-slider {
-    margin-top: 10px;
-}
-
-.filter-info .filter-bar .price-range-slider .range-value {
-    position: relative;
-}
-
-.filter-info .filter-bar .price-range-slider .range-value input {
-    width: 100%;
-    border: none;
-    font-size: 16px;
-    box-shadow: none;
-    font-weight: initial;
-    background: none;
-    color: var(--blackColor);
-}
-
-.filter-info .filter-bar .price-range-slider .range-bar {
-    width: 100%;
-    height: 7px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    border: none;
-    background-color: #e4e4e4;
-    position: relative;
-}
-
-.filter-info .filter-bar .price-range-slider .range-bar .ui-slider-range {
-    height: 7px;
-    background-color: var(--primaryColor);
-}
-
-.filter-info .filter-bar .price-range-slider .range-bar .ui-slider-handle {
-    display: inline-block;
-    position: absolute;
-    top: -3px;
-    left: 0;
-    z-index: 12;
-    height: 14px;
-    width: 4px;
-    border-radius: 5px;
-    background: var(--primaryColor);
-    content: '';
-}
-
-.filter-info .filter-bar .price-range-slider .range-bar .ui-slider-handle+span {
-    background-color: var(--primaryColor);
-}
-
-.edu-check {
-    margin-bottom: 20px;
-}
-
-.edu-check:last-child {
-    margin-bottom: 0px;
-}
-
-.edu-check-input {
-    border: none;
-    background-color: var(--offWhiteColor);
-    height: 30px;
-    width: 30px;
-    border-radius: 18px !important;
-    margin-right: 20px;
-    margin-top: 0;
-    padding: 0;
-    cursor: pointer;
-    box-shadow: none !important;
-}
-
-.edu-check-input:checked {
-    border: none;
-    background-color: var(--primaryColor);
-    --bs-form-check-bg-image: url(../img/all-img/check-icon.png) !important;
-    box-shadow: none;
-}
-
-.edu-check-label {
-    cursor: pointer;
-    color: var(--paraColor);
-    font-size: 15px;
-}
-
-.edu-check-label span i {
-    color: var(--secondaryColor);
-    margin-right: 5px;
-}
-
-.widget-rating .edu-check ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.widget-rating .edu-check ul li {
-    display: inline-block;
-    margin-right: 2px;
-}
-
-.widget-rating .edu-check ul li i {
-    color: #ffbc1f;
-    font-size: 24px;
-}
-
-.widget-rating .edu-check ul li .desstar {
-    color: #cfcfcf;
-}
-
-.widget-resent-course .item {
-    position: relative;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #ececec;
-    padding-left: 95px;
-    padding-bottom: 20px;
-}
-
-.widget-resent-course .item:last-child {
-    margin-bottom: 0px;
-    border-bottom: none;
-    padding-bottom: 0px;
-}
-
-.widget-resent-course .thumb {
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    height: 80px;
-    width: 80px;
-    border-radius: 4px;
-}
-
-.widget-resent-course .item ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    margin-bottom: 2px;
-}
-
-.widget-resent-course .item ul li {
-    display: inline-block;
-    margin-right: 2px;
-}
-
-.widget-resent-course .item ul li i {
-    color: #ffbc1f;
-    font-size: 18px;
-}
-
-.widget-resent-course .item h4 {
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.widget-resent-course .item span {
-    color: var(--secounderyColor);
-    font-weight: 500;
-    font-size: 18px;
-}
-
-.widget-recent-blog .item {
-    position: relative;
-    margin-bottom: 30px;
-    padding-left: 115px;
-}
-
-.widget-recent-blog .item:last-child {
-    margin-bottom: 0px;
-    border-bottom: none;
-    padding-bottom: 0px;
-}
-
-.widget-recent-blog .item .thumb {
-    position: absolute;
-    content: '';
-    top: 0;
-    left: 0;
-    height: 100px;
-    width: 100px;
-    border-radius: 4px;
-}
-
-.widget-recent-blog .item h4 {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 32px;
-    color: var(--mainColor);
-}
-
-.widget-recent-blog .item p {
-    font-size: 16px;
-    margin-bottom: 0px;
-}
-
-.widget-recent-blog .item p a {
-    color: var(--mainColor);
-    font-weight: 600;
-}
-
-.widget-tag-cloud .tagcloud a {
-    display: inline-block;
-    background-color: var(--offWhiteColor);
-    color: var(--blackColor);
-    padding: 6px 14px 6px;
-    border: none;
-    font-size: 15px !important;
-    margin-bottom: 15px;
-    margin-right: 5px;
-    border-radius: 30px
-}
-
-.widget-tag-cloud .tagcloud a:hover {
-    background-color: var(--primaryColor);
-    color: var(--whiteColor);
-    box-shadow: 0px 6px 30px 0px #573BFF4D;
-}
-
-.widget-add {
-    background-image: url(../img/all-img/add-image.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding: 35px 50px;
-    text-align: center;
-    position: relative;
-    border-radius: 10px;
-}
-
-.widget-add::after {
-    position: absolute;
-    content: '';
-    background: linear-gradient(180deg, rgba(0, 13, 33, 0.5) 0%, rgba(0, 13, 33, 0.5) 100%);
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    border-radius: 10px;
-}
-
-.widget-add .content {
-    position: relative;
-    z-index: 2;
-}
-
-.widget-add .content p {
-    color: var(--whiteColor);
-    font-weight: 600;
-    border-bottom: 1px solid var(--whiteColor);
-    padding-bottom: 25px;
-    margin-bottom: 25px;
-}
-
-.widget-add .content img {
-    padding: 10px 20px;
-    background: var(--whiteColor);
-    text-align: center;
-    margin-bottom: 20px;
-    border-radius: 5px;
-}
-
-ul.page-nav {
-    padding: 0;
-}
-
-.page-nav li {
-    margin: 0 4px;
-    display: inline-block;
-}
-
-.page-nav li a {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 30px;
-    line-height: 35px;
-    text-align: center;
-    color: var(--paraColor);
-    background-color: var(--whiteColor);
-    transition: var(--transition);
-    border: 1px solid var(--borderColor);
-}
-
-.page-nav li a i {
-    font-size: 25px;
-    font-weight: 300;
-    line-height: 0.8;
-    margin: 0 auto;
-    transition: var(--transition);
-}
-
-.page-nav li a img {
-    transition: var(--transition);
-}
-
-.page-nav li a:hover img {
-    filter: brightness(0) invert(1);
-}
-
-.page-nav li a.active,
-.page-nav li a:hover {
-    opacity: 1;
-    background-color: var(--primaryColor);
-    border-color: transparent;
-    color: var(--whiteColor);
-}
-
-.page-nav li:first-child,
-.page-nav li:last-child {
-    position: relative;
-    top: 2px;
-}
-
-.page-nav li:first-child {
-    transform: rotate(180deg);
 }
 </style>

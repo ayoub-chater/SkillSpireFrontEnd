@@ -1,9 +1,27 @@
 <script setup>
 
+import { onMounted , ref } from "vue";
+import { useAuthStore } from "../stores/counter"
+
+const authStore = useAuthStore();
+const userWithInfo = ref(); 
+
+const logout = async () => {
+    console.log('Logout function called');
+    await authStore.handleLogout();
+    router.push('/login');
+};
+
+onMounted(async () => {
+    await authStore.getUser();
+    await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
+    userWithInfo.value = authStore.userWithInfo;
+});
+
 </script>
 
 <template>
-  <div class="navbar-area style-one" id="navbar">
+    <div class="navbar-area style-one" id="navbar">
         <div class="navbar-top">
             <div class="container">
                 <div class="main-max-width">
@@ -74,63 +92,36 @@
                                 </router-link>
                             </li>
                             <li class="nav-item">
-                                <router-link to="/login" class="nav-link">
-                                    Login
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
-                                <router-link to="/register" class="nav-link">
-                                    Register
-                                </router-link>
-                            </li>
-                            <li class="nav-item">
                                 <router-link to="/courses" class="nav-link">
                                     Courses
                                 </router-link>
+                            </li>
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" class="dropdown-toggle nav-link">
+                                    <span>Account</span>
+                                </a>
                                 <ul class="dropdown-menu list-unstyle">
-                                    <li class="nav-item">
-                                        <a href="courses.html" class="nav-link">
-                                            Courses
-                                        </a>
+                                    <li class="nav-item" v-if="!authStore.user">
+                                        <router-link to="/login" class="nav-link">
+                                            Login
+                                        </router-link>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="courses-list.html" class="nav-link">
-                                            Course List
-                                        </a>
+                                    <li class="nav-item" v-if="!authStore.user">
+                                        <router-link to="/register" class="nav-link">
+                                            Register
+                                        </router-link>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="courses-grid.html" class="nav-link">
-                                            Courses Grid
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="course-details.html" class="nav-link">
-                                            Course Details
+                                    <li class="nav-item" v-if="authStore.user">
+                                        <a class="nav-link" @click="logout">
+                                            Logout
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="javascript:void(0)" class="dropdown-toggle nav-link">
-                                    <span>Blog</span>
-                                </a>
-                                <ul class="dropdown-menu list-unstyle">
-                                    <li class="nav-item">
-                                        <a href="blog.html" class="nav-link">
-                                            Blog
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="blog-list.html" class="nav-link">
-                                            Blog List
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="blog-details.html" class="nav-link">
-                                            Blog Details
-                                        </a>
-                                    </li>
-                                </ul>
+                                <router-link to="/calandar" class="nav-link">
+                                    Calandar
+                                </router-link>
                             </li>
                             <li class="nav-item">
                                 <a href="contact.html" class="nav-link">
@@ -139,9 +130,9 @@
                             </li>
                         </ul>
                         <div class="option-item">
-                            <a href="contact.html" class="serarch-btn">
+                            <router-link v-if="authStore.userWithInfo && userWithInfo && userWithInfo.participant_info" :to="`/participant/${userWithInfo.participant_info[0].id}`" class="serarch-btn">
                                 <i class="ri-user-3-line"></i>
-                            </a>
+                            </router-link>
                             <a href="cart.html" class="shop-btn"><i class="ri-shopping-cart-2-line"></i>
                                 <span class="cart-number">1</span>
                             </a>
