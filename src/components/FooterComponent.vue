@@ -17,7 +17,7 @@
                                 </div>
                                 <p class="pra-light mb-30">Consulting is a dynamic and multifaceted field that involves providing expert advice and guidance to individuals,</p>
 
-                                <a href="sign-up.html" class="btn style-one">Sign Up <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                <router-link to="/register" class="btn style-one">Sign Up <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-6 col-md-6">

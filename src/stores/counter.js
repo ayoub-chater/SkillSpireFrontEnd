@@ -310,3 +310,19 @@ export const useCentres = defineStore("centres", {
   }
 });
 
+
+export const useContact = defineStore('contact',{
+  state: () => ({
+    message: null,
+  }),
+  getters: {
+    msg: (state) => state.message,
+  },
+  actions: {
+    async sendMail(form){
+      const response = await axios.post('/api/contact',form)
+      this.message = response.data.message;
+    }
+  }
+})
+

@@ -1,5 +1,16 @@
 <script setup>
+import { useAuthStore } from '@/stores/counter';
+import { useRouter } from 'vue-router';
 
+const authStore = useAuthStore();
+
+const router = useRouter();
+
+const logout = async () => {
+    console.log('Logout function called');
+    await authStore.handleLogout();
+    router.push('/login');
+};
 </script>
 
 <template>
@@ -118,6 +129,11 @@
             <div class="data_text">
             <span class="name">David Oliva</span>
             <span class="email">david@gmail.com</span>
+            <span class="logout" v-if="authStore.user">
+                <a class="nav-link" @click="logout">
+                    Logout
+                </a>
+            </span>
             </div>
         </div>
         </div>

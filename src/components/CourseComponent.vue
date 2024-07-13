@@ -16,7 +16,8 @@ const form = ref({
     formation_id: null,
     status: 'pending',
     payment_proof: '',
-    justification: ''
+    justification: '',
+    amount: null,
     });
 
     const route = useRoute();
@@ -32,8 +33,12 @@ const form = ref({
         await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
         userWithInfo.value = authStore.userWithInfo;
 
-        form.value.participant_id = userWithInfo.value?.participant_info?.id || null;
+        form.value.participant_id = userWithInfo.value?.participant_info[0]?.id || null;
         form.value.formation_id = formation.value.id;
+        form.value.amount = formation.value.price;
+        console.log(form.value.participant_id);
+        console.log(form.value.formation_id);
+        console.log(form.value.amount);
     } catch (error) {
         console.error('Error during setup:', error);
     }
@@ -751,7 +756,7 @@ const form = ref({
                         <input type="text" class="input"  v-model="form.justification" placeholder="Justification">
                         <button type="submit" class="btn style-one w-100 box-shadow-1">Buy This Course</button>
                     </form>
-                    <router-link v-else to="/login" class="btn style-one w-100 box-shadow-1">Login For Buy This Course</router-link>                    
+                    <router-link v-else to="/login" class="btn style-one w-100 box-shadow-1">Login To Buy This Course</router-link>                    
                     <!-- Success Modal -->
                     <div class="modal" tabindex="-1" role="dialog" :class="{ 'show': successModal, 'd-block': successModal }">
                         <div class="modal-dialog" role="document">

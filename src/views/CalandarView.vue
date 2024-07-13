@@ -15,6 +15,6 @@ import FooterComponent from "../components/FooterComponent.vue" ;
     <BannerComponent />
     <CalendarComponent />
     <SubscribeComponent />
-    <FooterComponent />
+    <FooterComponent />
 
 </template>

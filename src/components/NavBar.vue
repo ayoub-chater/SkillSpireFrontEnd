@@ -3,13 +3,14 @@
 import { onMounted , ref } from "vue";
 import { useAuthStore } from "../stores/counter"
 
+
 const authStore = useAuthStore();
 const userWithInfo = ref(); 
 
 const logout = async () => {
     console.log('Logout function called');
     await authStore.handleLogout();
-    router.push('/login');
+    
 };
 
 onMounted(async () => {
@@ -123,10 +124,10 @@ onMounted(async () => {
                                     Calandar
                                 </router-link>
                             </li>
-                            <li class="nav-item">
-                                <a href="contact.html" class="nav-link">
+                            <li class="nav-item" >
+                                <router-link to="/contact" class="nav-link">
                                     Contact
-                                </a>
+                                </router-link>
                             </li>
                         </ul>
                         <div class="option-item">
