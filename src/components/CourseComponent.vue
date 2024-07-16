@@ -1,27 +1,31 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useFomations, useInscriptions, useAuthStore } from '../stores/counter';
+import { useFomations, useInscriptions, useAuthStore, useCart } from '../stores/counter';
 
 const Fomation = useFomations();
 const authStore = useAuthStore();
 const Inscription = useInscriptions();
+const cart = useCart();
 const formation = ref(null);
 const CountOfFormations = ref(null);
 const userWithInfo = ref(null);
 const successModal = ref(false);
 
 const form = ref({
-    participant_id: null,
+    user_id: null,
     formation_id: null,
     status: 'pending',
-    payment_proof: '',
-    justification: '',
     amount: null,
     });
 
+const cartItem = ref({});
+
     const route = useRoute();
     const id = route.path.slice(9);
+
+
+    const message = ref(null);
 
     onMounted(async () => {
     try {
@@ -33,12 +37,18 @@ const form = ref({
         await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
         userWithInfo.value = authStore.userWithInfo;
 
-        form.value.participant_id = userWithInfo.value?.participant_info[0]?.id || null;
+        form.value.user_id = authStore.user?.id || null;
         form.value.formation_id = formation.value.id;
         form.value.amount = formation.value.price;
         console.log(form.value.participant_id);
         console.log(form.value.formation_id);
         console.log(form.value.amount);
+        message.value = route.query;
+        console.log(message.value.success);
+        // if(message.value){
+        //     successModal.value = true;
+        // }
+
     } catch (error) {
         console.error('Error during setup:', error);
     }
@@ -46,12 +56,16 @@ const form = ref({
 
     const submitForm = async () => {
     try {
-        await Inscription.inscription(form.value);
-        successModal.value = true;
+        // await Inscription.inscription(form.value);
+        cartItem.value = {user_id : authStore.user?.id , formation:formation.value}
+        cart.addToCart(cartItem.value);
+
+
     } catch (error) {
         console.error('Error during form submission:', error);
     }
 };
+
 </script>
 
 
@@ -752,17 +766,15 @@ const form = ref({
                         </li>
                     </ul>
                     <form v-if="authStore.user" @submit.prevent="submitForm">
-                        <input type="text" class="input" v-model="form.payment_proof" placeholder="Payment Proof">
-                        <input type="text" class="input"  v-model="form.justification" placeholder="Justification">
-                        <button type="submit" class="btn style-one w-100 box-shadow-1">Buy This Course</button>
+                        <button type="submit" class="btn style-one w-100 box-shadow-1">Add To Cart</button>
                     </form>
-                    <router-link v-else to="/login" class="btn style-one w-100 box-shadow-1">Login To Buy This Course</router-link>                    
+                    <router-link v-else to="/login" class="btn style-one w-100 box-shadow-1">Login To Add This Course</router-link>                    
                     <!-- Success Modal -->
                     <div class="modal" tabindex="-1" role="dialog" :class="{ 'show': successModal, 'd-block': successModal }">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <p>You have successfully purchased the course.</p><button type="button" class="btn style-one box-shadow-1 buy" @click="successModal = false">Close</button>
+                                    <p>Payment.</p><button type="button" class="btn style-one box-shadow-1 buy" @click="successModal = false">Close</button>
                                 </div>
                             </div>
                         </div>

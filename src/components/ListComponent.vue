@@ -80,7 +80,8 @@ const editCentre = (centre) => {
 
 const editFormation = (formation) => {
     editingFormation.value = { ...formation };
-    formationEditMode.value = true;
+    editMode.value = true;
+    console.log(formation);
 };
 const saveEditedParticipant = async () => {
     try {
@@ -113,19 +114,32 @@ const saveEditedFormation = async () => {
     try {
         await user.updateFormation(editingFormation.value.id, editingFormation.value);
         await fetchData();
-        formationEditMode.value = false;
+        editMode.value = false;
     } catch (error) {
         console.error('Error updating formation:', error);
     }
 };
 
 const cancelEdit = () => {
-    formationEditMode.value = false;
+    editMode.value=false;
 };
 
-onMounted(fetchData);
+onMounted(async () => {
+    try {
+        fetchData();
+        if (formationEditMode) {
+            console.log(formationEditMode.value);
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+);
 
 watch(() => route.params, fetchData);
+
+
 </script>
 
 
@@ -208,16 +222,16 @@ watch(() => route.params, fetchData);
                 <td>{{ formation.end_date }}</td>
                 <td>
                     <button class="deleteBtn" @click="deleteFormation(formation.id)">Delete</button>
-                    <button class="editBtn" @click="openEditFormationModal(formation)">Edit</button>
+                    <button class="editBtn" @click="editFormation(formation)">Edit</button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <div v-if="formationEditMode" class="modal">
-            <div class="modal-content">
-                <span class="close" @click="cancelEdit">&times;</span>
+    <div v-if="editMode" class="mb-5">
+            
+                
                 <h2>Edit Formation</h2>
-                <form @submit.prevent="saveEditedFormation">
+                <form @submit.prevent="saveEditedFormation" class="d-flex flex-column">
                     <label>Title:</label>
                     <input type="text" v-model="editingFormation.title">
                     <label>Description:</label>
@@ -225,13 +239,14 @@ watch(() => route.params, fetchData);
                     <label>Price:</label>
                     <input type="number" v-model="editingFormation.price">
                     <label>Start Date:</label>
-                    <input type="date" v-model="editingFormation.start_date">
+                    <input type="datetime-local" v-model="editingFormation.start_date">
                     <label>End Date:</label>
-                    <input type="date" v-model="editingFormation.end_date">
-                    <button type="submit">Save</button>
+                    <input type="datetime-local" v-model="editingFormation.end_date">
+                    <button type="submit" class="mt-3 mb-3">Update</button>
+                <button @click="cancelEdit">Cancel</button>
                 </form>
-            </div>
-        </div>
+           
+    </div>
     </div>
 </template>
 

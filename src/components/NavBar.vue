@@ -134,9 +134,9 @@ onMounted(async () => {
                             <router-link v-if="authStore.userWithInfo && userWithInfo && userWithInfo.participant_info" :to="`/participant/${userWithInfo.participant_info[0].id}`" class="serarch-btn">
                                 <i class="ri-user-3-line"></i>
                             </router-link>
-                            <a href="cart.html" class="shop-btn"><i class="ri-shopping-cart-2-line"></i>
-                                <span class="cart-number">1</span>
-                            </a>
+                            <router-link to="/cart" class="shop-btn"><i class="ri-shopping-cart-2-line"></i>
+                                <!-- <span class="cart-number">1</span> -->
+                            </router-link>
                             <a href="contact.html" class="btn style-one box-shadow-1">Free Consulting</a>
                         </div>
                     </div>
