@@ -306,6 +306,7 @@ export const useCentres = defineStore("centres", {
   }
 });
 
+// contact store
 
 export const useContact = defineStore('contact',{
   state: () => ({
@@ -322,6 +323,7 @@ export const useContact = defineStore('contact',{
   }
 });
 
+// cart store
 
 export const useCart = defineStore('cart',{
   state: () => ({
