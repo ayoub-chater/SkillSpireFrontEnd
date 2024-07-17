@@ -12,7 +12,7 @@
                         </div>
                         <div class="about-meta d-flex align-items-center mt-40">
                             <div class="about-btn mr-20">
-                                <a href="about.html" class="btn style-one box-shadow-1">About More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                <router-link to="/about" class="btn style-one box-shadow-1">About More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                             </div>
                             <div class="info">
                                 <div class="d-flex align-items-center">
@@ -32,7 +32,7 @@
                                     <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
                                     <h4>Learn From The Experts</h4>
                                     <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
-                                    <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                    <router-link class="btn" to="/about">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                                 </div>
                             </div>
 
@@ -51,7 +51,7 @@
                                     <div class="icon"><img src="./assets/img/icon/about-icon.svg" alt="icon"></div>
                                     <h4>Explore our Beliefs</h4>
                                     <p>Stay committed to lifelong learning. Fields evolve, and staying informed about the latest Developments.</p>
-                                    <a class="btn" href="about.html">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                    <router-link class="btn" to="/about">Read More <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                                 </div>
                             </div>
                         </div>

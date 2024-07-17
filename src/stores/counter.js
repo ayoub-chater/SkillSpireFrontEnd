@@ -224,7 +224,7 @@ export const useUser = defineStore("addUsers", {
     },
     async saveEditedProfessor(professors) {
       try {
-        const response = await axios.put(`/api/users/professors/${professors.id}`, professors); 
+        const response = await axios.put(`/api/users/${professors.id}`, professors); 
         return response.data;
       } catch (error) {
         console.error('Error updating professor:', error);
@@ -236,7 +236,7 @@ export const useUser = defineStore("addUsers", {
         const response = await axios.put(`/api/centres/${centres.id}`, centres); 
         return response.data;
       } catch (error) {
-        console.error('Error updating centre:', error);
+          console.error('Error updating centre:', error);
         throw error;
       }
     },
@@ -281,11 +281,16 @@ export const useUser = defineStore("addUsers", {
 export const useInscriptions = defineStore("inscriptions", {
   state: () => ({
     inscriptions: null,
+    usersOfFormation : null,
   }),
   actions: {
     async inscription(form) {
       const response = await axios.post(`/api/inscriptions`, form);
       this.inscriptions = response.data;
+    },
+    async getUsersByFormation( id ) {
+      const response = await axios.get(`/api/inscriptions/users/${id}`);
+      this.usersOfFormation = response.data;
     },
   },
 });

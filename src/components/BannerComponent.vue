@@ -7,12 +7,18 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const authStore = useAuthStore();
+let flag = false ;
 
 onMounted(async () => {
     await authStore.getUser();
 });
 
 const route = ref(useRoute().path.slice(1));
+if( route.value.includes('/') ) {
+    flag = true ;
+}
+
+console.log(route.value)
 
 </script>
 
@@ -21,11 +27,11 @@ const route = ref(useRoute().path.slice(1));
         <div class="container">
             <div class="main-max-width">
                 <div class="page-title-content">
-                    <h2>{{ route }}</h2>
+                    <h2>{{ route.slice(1, 8) }} {{ flag ? "- detail" : '' }}</h2>
                     <ul class="page-breadcrumb align-items-center list-unstyle">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item"></li>
-                        <li class="primery-link">{{ route }}</li>
+                        <li class="primery-link">{{ route.slice(1, 8) }} {{ flag ? "detail" : '' }}</li>
                     </ul>
                     <div class="shape-1 moveHorizontal">
                         <img src="./assets/img/icon/shape-2.svg" alt="image">

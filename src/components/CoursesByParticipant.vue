@@ -1,24 +1,37 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useFomations, useCentres } from "../stores/counter";
 import { useRoute } from 'vue-router';
+import { onMounted, ref, computed } from 'vue';
+import { useFomations, useCentres } from "../stores/counter";
 
 const Fomations = useFomations();
 const Centres = useCentres();
 
 const formations = ref([]);
 const centres = ref([]);
+const selectedCentre = ref('');
+const searchQuery = ref('');
 
 const id = useRoute().path.slice(13);
-
-console.log(id)
 
 onMounted(async () => {
     await Fomations.fetchFormationByParticipant(id);
     formations.value = Fomations.formations;
     await Centres.fetchCentres();
     centres.value = Centres.centres;
+    console.log(formations.value)
 });
+
+const filteredFormations = computed(() => {
+    return formations.value.filter(formation => {
+        const matchesCentre = !selectedCentre.value || formation.centre_id === selectedCentre.value;
+        const matchesSearch = formation.title.toLowerCase().includes(searchQuery.value.toLowerCase());
+        return matchesCentre && matchesSearch;
+    });
+});
+
+const filterFormationsByCentre = (centreId) => {
+    selectedCentre.value = centreId;
+};
 </script>
 
 
@@ -29,25 +42,22 @@ onMounted(async () => {
                 <div class="edu-grid-sorting bg-fw">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6">
-                            <p class="mb-0">Showing 1-8 of 54 results</p>
+                            <p class="mb-0">Showing 1-8 of {{ filteredFormations.length }} results</p>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="fitter-option d-flex align-items-center justify-content-end">
                                 <div class="nice-select mr-20">
                                     <select>
-                                            <option>Sort By: Popularity</option>
-                                            <option>Popularity</option>
-                                            <option>Another option</option>
-                                            <option>Potato</option>
-                                        </select>
+                                        <option>Sort By: Popularity</option>
+                                        <option>Popularity</option>
+                                        <option>Another option</option>
+                                        <option>Potato</option>
+                                    </select>
                                 </div>
                                 <div class="item d-flex align-items-center">
                                     <a href="courses.html" class="d-flex align-items-center active">
                                         <div class="icon"><i class="ri-layout-grid-line"></i></div> <span>Grid</span>
                                     </a>
-                                    <!-- <a href="courses-list.html" class="d-flex align-items-center">
-                                        <div class="icon"><i class="ri-layout-grid-line"></i></div> <span>List</span>
-                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -56,20 +66,19 @@ onMounted(async () => {
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row">
-                            <div v-for="formation in formations" :key="formation.id" class="col-lg-6 col-sm-6">
+                            <div v-for="formation in filteredFormations" :key="formation.id" class="col-lg-6 col-sm-6">
                                 <div class="single-courses-box mb-25 box-shadow-2">
                                     <router-link :to="'/courses/' + formation.id">
                                         <div class="image mb-20 position-relative">
                                             <a href="course-details.html" class="d-block">
-                                                <!-- <img :src="`./assets/img/all-img/${formation.image_path}`" alt="image"> -->
-                                                <img src="./assets/img/all-img/course-2.png" alt="image">
-                                                </a>
+                                                <img :src="`/assets/img/all-img/${formation.image_path}`" alt="image">
+                                            </a>
                                             <div class="cr-option">
                                                 <a href="author.html"><i class="ri-heart-fill"></i></a>
                                                 <a href="author.html"><i class="ri-shopping-basket-fill"></i></a>
                                             </div>
                                             <div class="cr-tag">
-                                                <!-- <a href="./course-details.html">{{ formation.name.toUpperCase() }}</a> -->
+                                                <!-- <a href="./course-details.html">{{ formation.centre.name.toUpperCase() }}</a> -->
                                             </div>
                                         </div>
                                         <div class="content">
@@ -103,25 +112,29 @@ onMounted(async () => {
                     <div class="col-lg-4">
                         <aside class="course-sidebar-widgets">
                             <div class="widget widget-catgory widget-search">
-                                <form class="search-form">
+                                <form class="search-form" @submit.prevent>
                                     <label>
-                                            <input type="search" class="search-field" placeholder="Search...">
-                                        </label>
+                                        <input type="search" class="search-field" v-model="searchQuery" placeholder="Search...">
+                                    </label>
                                     <button class="widget-search-btn" type="submit"><i class="ri-search-line"></i></button>
                                 </form>
-
                                 <div class="accordion" id="widget-collps">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                                    Centres
-                                                </button>
+                                                Centres
+                                            </button>
                                         </h2>
                                         <div id="collapseOne" class="widget-collapse collapse show" data-bs-parent="#widget-collps">
                                             <div class="widget-collps-body">
                                                 <ul>
+                                                    <li>
+                                                        <a @click="filterFormationsByCentre('')" :class="{ 'activeCentre': selectedCentre === '' }">
+                                                            <p>All Centres</p>
+                                                        </a>
+                                                    </li>
                                                     <li v-for="centre in centres" :key="centre.id">
-                                                        <a>
+                                                        <a @click="filterFormationsByCentre(centre.id)" :class="{ 'activeCentre': selectedCentre === centre.id }">
                                                             <p>{{ centre.name }}</p> <span>({{ centre.formations_count }})</span>
                                                         </a>
                                                     </li>
@@ -135,6 +148,7 @@ onMounted(async () => {
                     </div>
                 </div>
 
+                <!-- Pagination -->
                 <ul class="page-nav list-style text-start p-0 mt-40">
                     <li><a href="courses.html"><img src="./assets/img/icon/long-arrow.svg" alt="icon"></a></li>
                     <li><a class="active" href="courses.html">01</a></li>
@@ -149,6 +163,10 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+.activeCentre {
+    color: #fff !important;
+    background-color: var(--primaryColor) !important;
+}
 .course-section .sorting-menu {
     position: absolute;
     bottom: 5px;

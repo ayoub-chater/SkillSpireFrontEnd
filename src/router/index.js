@@ -33,7 +33,8 @@ const router = createRouter({
     {
       path: '/courses',
       name: 'courses',
-      component: () => import('../views/CoursesView.vue')
+      component: () => import('../views/CoursesView.vue'),
+      props: route => ({ centreName: route.query.centreName })
     },
     {
       path: '/courses/:courseId',
@@ -65,6 +66,11 @@ const router = createRouter({
       path: '/professor/:id',
       name: 'professor',
       component: () => import('../views/ProfessorView.vue'),
+    },
+    {
+      path: '/professor/:id/participants/:id',
+      name: 'usersOfFormation',
+      component: () => import('../views/UsersOfFormation.vue'),
     },
     {
       path: '/calandar',

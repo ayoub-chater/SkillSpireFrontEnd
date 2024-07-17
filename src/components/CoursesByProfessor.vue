@@ -13,14 +13,13 @@ const searchQuery = ref('');
 
 const id = useRoute().path.slice(11);
 
-console.log(id)
-
 onMounted(async () => {
     await Fomations.fetchFormationsByProfessor(id);
     formations.value = Fomations.formations;
+    console.log(formations.value)
     await Centres.fetchCentres();
     centres.value = Centres.centres;
-    console.log(centres.value)
+    console.log(formations.value)
 });
 
 const filteredFormations = computed(() => {
@@ -91,7 +90,7 @@ const filterFormationsByCentre = (centreId) => {
                                                 </div>
                                             </div>
                                             <h3 class="mb-15 fs-20"><a href="blog-details.html">{{ formation.title }}</a></h3>
-                                            <div class="ratings mb-20">
+                                            <div class="ratings mb-20 d-flex particip">
                                                 <ul class="d-flex list-unstyle p-0">
                                                     <li><i class="ri-star-fill"></i></li>
                                                     <li><i class="ri-star-fill"></i></li>
@@ -100,6 +99,7 @@ const filterFormationsByCentre = (centreId) => {
                                                     <li><i class="ri-star-fill"></i></li>
                                                     <li><span>(45)</span></li>
                                                 </ul>
+                                                <router-link :to="`/professor/${id}/participants/${ formation.id }`" class="participants">Participants</router-link>
                                             </div>
                                         </div>
                                         <ul class="cr-items d-flex list-unstyle">
@@ -131,12 +131,12 @@ const filterFormationsByCentre = (centreId) => {
                                             <div class="widget-collps-body">
                                                 <ul>
                                                     <li>
-                                                        <a @click="filterFormationsByCentre('')">
+                                                        <a @click="filterFormationsByCentre('')" :class="{ 'activeCentre': selectedCentre === '' }">
                                                             <p>All Centres</p>
                                                         </a>
                                                     </li>
                                                     <li v-for="centre in centres" :key="centre.id">
-                                                        <a @click="filterFormationsByCentre(centre.id)">
+                                                        <a @click="filterFormationsByCentre(centre.id)" :class="{ 'activeCentre': selectedCentre === centre.id }">
                                                             <p>{{ centre.name }}</p> <span>({{ centre.formations_count }})</span>
                                                         </a>
                                                     </li>
@@ -165,6 +165,22 @@ const filterFormationsByCentre = (centreId) => {
 </template>
 
 <style scoped>
+
+.particip {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.participants {
+    background-color: #573bff;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+.activeCentre {
+    color: #fff !important;
+    background-color: var(--primaryColor) !important;
+}
 .course-section .sorting-menu {
     position: absolute;
     bottom: 5px;

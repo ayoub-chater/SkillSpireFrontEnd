@@ -20,8 +20,8 @@
                                                     <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
                                                     <div class="her-btns mt-40">
-                                                        <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                                        <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                                        <router-link to='/courses/' class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
+                                                        <router-link to='/about/' class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                                                     </div>
 
                                                     <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
@@ -49,8 +49,8 @@
                                         <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
                                         <div class="her-btns mt-40">
-                                            <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                            <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                            <router-link to='/courses/' class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
+                                            <router-link to='/about/' class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                                         </div>
 
                                         <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
@@ -78,8 +78,8 @@
                                         <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
                                         <div class="her-btns mt-40">
-                                            <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                            <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                            <router-link to='/courses/' class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
+                                            <router-link to='/about/' class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                                         </div>
 
                                         <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>
@@ -107,8 +107,8 @@
                                         <p>In the dynamic landscape of today's professional world, the key to success lies in continuous learning and skill Development. As industries evolve and technology advances,</p>
 
                                         <div class="her-btns mt-40">
-                                            <a href="course-details.html" class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
-                                            <a href="about.html" class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></a>
+                                            <router-link to='/courses/' class="btn style-one mr-20">Browser Course <img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
+                                            <router-link to='/about/' class="btn style-two">Explore More<img src="./assets/img/icon/long-arrow.svg" alt="Image"></router-link>
                                         </div>
 
                                         <div class="book-icon bounce"><img src="./assets/img/icon/book.svg" alt="image"></div>

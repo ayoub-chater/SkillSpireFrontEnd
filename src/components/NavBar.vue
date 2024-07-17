@@ -15,8 +15,10 @@ const logout = async () => {
 
 onMounted(async () => {
     await authStore.getUser();
-    await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
-    userWithInfo.value = authStore.userWithInfo;
+    const user = authStore.user;
+    console.log(user) ;
+    // await authStore.getUserWithInfo(user.role, user.id);
+    // userWithInfo.value = authStore.userWithInfo;
 });
 
 </script>
@@ -131,19 +133,23 @@ onMounted(async () => {
                             </li>
                         </ul>
                         <div class="option-item">
-                            <router-link v-if="authStore.userWithInfo && userWithInfo && userWithInfo.participant_info" :to="`/participant/${userWithInfo.participant_info[0].id}`" class="serarch-btn">
+                            <router-link v-if="authStore.user && authStore.user.role === 'participant'" :to="`/participant/${authStore.user.id}`" class="shop-btn">
                                 <i class="ri-user-3-line"></i>
                             </router-link>
-                            <a href="cart.html" class="shop-btn"><i class="ri-shopping-cart-2-line"></i>
-                                <span class="cart-number">1</span>
-                            </a>
-                            <a href="contact.html" class="btn style-one box-shadow-1">Free Consulting</a>
+                            <router-link v-else-if="authStore.user && authStore.user.role === 'professor'" :to="`/professor/${authStore.user.id}`" class="shop-btn">
+                                <i class="ri-user-3-line"></i>
+                            </router-link>
+                            <router-link to="/cart" class="shop-btn">
+                                <i class="ri-shopping-cart-2-line"></i>
+                                <!-- <span class="cart-number">1</span> -->
+                            </router-link>
+                            <router-link to="/contact" class="btn style-one box-shadow-1">Free Consulting</router-link>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
-  </div>
+    </div>
 </template>
 
 <style scoped>

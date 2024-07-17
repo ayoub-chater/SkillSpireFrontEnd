@@ -87,7 +87,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-xm-6 col-md-6">
                             <div class="cpr-left">
-                                <p class="mb-0">Copyright @ 2023 Education. All Rights Reserved.</p>
+                                <p class="mb-0">Copyright @ 2024 Education. All Rights Reserved.</p>
                             </div>
                         </div>
                         <div class="col-lg-8 col-xm-6 col-md-6">

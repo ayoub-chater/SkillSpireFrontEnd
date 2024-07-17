@@ -1,22 +1,47 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { useFomations, useCentres } from "../stores/counter";
 
 const Fomations = useFomations();
 const Centres = useCentres();
+const route = useRoute();
 
 const formations = ref([]);
 const centres = ref([]);
 const selectedCentre = ref('');
 const searchQuery = ref('');
 
+// Fetch formations and centres on component mount
 onMounted(async () => {
     await Fomations.fetchFormations();
     formations.value = Fomations.formations;
     await Centres.fetchCentres();
     centres.value = Centres.centres;
+    // Set the selected centre based on the query parameter
+    if (route.query.centreName) {
+        const centre = centres.value.find(centre => centre.name === route.query.centreName);
+        if (centre) {
+            selectedCentre.value = centre.id;
+        }
+    }
+    console.log(selectedCentre) ;
 });
 
+// Watch for changes in the route query parameters
+watch(
+    () => route.query.centreName,
+    (newCentreName) => {
+        const centre = centres.value.find(centre => centre.name === newCentreName);
+        if (centre) {
+            selectedCentre.value = centre.id;
+        } else {
+            selectedCentre.value = '';
+        }
+    }
+);
+
+// Filter formations based on the selected centre and search query
 const filteredFormations = computed(() => {
     return formations.value.filter(formation => {
         const matchesCentre = !selectedCentre.value || formation.centre_id === selectedCentre.value;
@@ -25,6 +50,7 @@ const filteredFormations = computed(() => {
     });
 });
 
+// Method to filter formations by selected centre
 const filterFormationsByCentre = (centreId) => {
     selectedCentre.value = centreId;
 };
@@ -39,7 +65,7 @@ const filterFormationsByCentre = (centreId) => {
                 <div class="edu-grid-sorting bg-fw">
                     <div class="row align-items-center">
                         <div class="col-lg-6 col-md-6">
-                            <p class="mb-0">Showing 1-6 of {{ filteredFormations.length }} results</p>
+                            <p class="mb-0">Showing 1- {{ filteredFormations.length }} of {{ formations.length }} results</p>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="fitter-option d-flex align-items-center justify-content-end">
@@ -120,27 +146,27 @@ const filterFormationsByCentre = (centreId) => {
                                 </form>
                                 <div class="accordion" id="widget-collps">
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                                Centres
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" class="widget-collapse collapse show" data-bs-parent="#widget-collps">
-                                            <div class="widget-collps-body">
-                                                <ul>
-                                                    <li>
-                                                        <a @click="filterFormationsByCentre('')">
-                                                            <p>All Centres</p>
-                                                        </a>
-                                                    </li>
-                                                    <li v-for="centre in centres" :key="centre.id">
-                                                        <a @click="filterFormationsByCentre(centre.id)">
-                                                            <p>{{ centre.name }}</p> <span>({{ centre.formations_count }})</span>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button widget-title" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                        Centres
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="widget-collapse collapse show" data-bs-parent="#widget-collps">
+                                        <div class="widget-collps-body">
+                                        <ul>
+                                            <li>
+                                            <a @click="filterFormationsByCentre('')" :class="{ 'activeCentre': selectedCentre === '' }">
+                                                <p>All Centres</p>
+                                            </a>
+                                            </li>
+                                            <li v-for="centre in centres" :key="centre.id">
+                                            <a @click="filterFormationsByCentre(centre.id)" :class="{ 'activeCentre': selectedCentre === centre.id }">
+                                                <p>{{ centre.name }}</p> <span>({{ centre.formations_count }})</span>
+                                            </a>
+                                            </li>
+                                        </ul>
                                         </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -275,6 +301,12 @@ const filterFormationsByCentre = (centreId) => {
 
 
 <style>
+
+.activeCentre {
+    color: #fff !important;
+    background-color: var(--primaryColor) !important;
+}
+
 .course-section .sorting-menu {
     position: absolute;
     bottom: 5px;

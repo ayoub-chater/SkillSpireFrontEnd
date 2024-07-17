@@ -4,11 +4,12 @@ import axios from "axios";
 import { useRoute } from 'vue-router';
 import { useUser } from "@/stores/counter";
 import { useAdmins } from "@/stores/counter";
+import { useCentres } from "@/stores/counter";
 import { useFomations } from "@/stores/counter";
 import { useAuthStore } from "@/stores/counter";
 
+const UserCentre = useUser();
 const authStore = useAuthStore();
-const user = useUser();
 
 const formations = useFomations();
 
@@ -37,6 +38,7 @@ const role = computed(() => {
     return part;
 });
 
+
 const professors = ref([]);
 const centres = ref([]);
 const salles = ref([]);
@@ -62,18 +64,20 @@ onMounted(async () => {
     fetchCentres();
     fetchSalles();
     await authStore.getUser();
-    if (authStore.user && authStore.user.role === 'admin') {
-        form.value.admin_id = authStore.admin_id;
+    const user = authStore.user;
+    console.log(user)
+    if (user && user.role === 'admin') {
+        form.value.admin_id = user.id;
     }
 });
 
 const addEntity = async () => {
-    if (role.value === 'professor' || role.value === 'Participant') {
+    if (role.value === 'professor' || role.value === 'participant') {
         await user.addUser(form.value, role.value);
     } else if (role.value === 'formations') {
-        await user.addCourse(form.value);
+        await UserCentre.addCourse(form.value);
     } else if (role.value === 'centres') {
-        await user.addCentre(form.value);
+        await UserCentre.addCentre(form.value);
     }
 };
 </script>
@@ -214,7 +218,7 @@ const addEntity = async () => {
 
                                 <div class="form-group mb-15">
                                     <label class="label-style">Admin ID</label>
-                                    <input type="text" v-model="form.admin_id" placeholder="admin id"
+                                    <input type="text" :v-model="user? user.id : ''" placeholder="admin id"
                                         class="bg-white input-style border-style w-100 h-60" readonly>
                                 </div>
 

@@ -25,14 +25,6 @@ const limitedFormations = computed(() => {
                     <h4 class="sub-title mb-25"># Our Courses List</h4>
                     <h2 class="fs-35">Broad Selection Of Course</h2>
 
-                    <div class="sorting-menu">
-                        <ul>
-                            <li class="filter active" data-filter="all">All Courses</li>
-                            <li class="filter" data-filter=".Design">UI&UX Design</li>
-                            <li class="filter" data-filter=".Business">Business</li>
-                            <li class="filter" data-filter=".Development">Development</li>
-                        </ul>
-                    </div>
                 </div>
                 <div id="mix-wrapper" class="course-mix-wrapper">
                     <div class="row">

@@ -15,13 +15,14 @@ const handleLogin = async () => {
     await authStore.handleLogin(form.value);
     await authStore.getUser();
     const user = authStore.user;
-    console.log(user)
+    console.log(user.role)
+    // console.log(user)
     if (user) {
-        if (user.role === 'participants') {
+        if (user.role === 'participant') {
             router.push("/");
-        } else if (user.role === 'professors') {
+        } else if (user.role === 'professor') {
             router.push(`/professor/${user.id}`);
-        } else if (user.role === 'admins') {
+        } else if (user.role === 'admin') {
             router.push("/admin/");
         }
     }

@@ -19,17 +19,17 @@ const formationEditMode =ref({});
 const route = useRoute();
 
 const role = computed(() => {
-    const part = route.path.slice(12);
+    const part = route.path.slice(12).toLocaleLowerCase();
     return part; 
 });
 
 console.log(role.value);
 
 const fetchData = async () => {
-    if (role.value === 'Professor') {
+    if (role.value === 'professor') {
         await user.listProfessors();
         users.value = user.professors;
-    } else if (role.value === 'Participant') {
+    } else if (role.value == 'participant') {
         await user.listParticipants();
         users.value = user.participants;
     } else if (role.value === 'formations' || role.value === 'salle') {
@@ -41,7 +41,9 @@ const fetchData = async () => {
     }
 }
 
+
 const deleteUser = async (id) => {
+    console.log(role.value)
     await user.deleteUser(id, role.value);
     await fetchData();
 };
@@ -82,6 +84,7 @@ const editFormation = (formation) => {
     editingFormation.value = { ...formation };
     formationEditMode.value = true;
 };
+
 const saveEditedParticipant = async () => {
     try {
         await user.updateUser(editedParticipant.value.id, editedRole.value, editedParticipant.value);
@@ -93,9 +96,9 @@ const saveEditedParticipant = async () => {
 
 const saveEditedCentre = async () => {
     try {
-        await user.updateCentre(editingCentre.value.id, editingCentre.value);
-        await fetchData();
+        await user.saveEditedCentre(editingCentre.value);
         centreEditMode.value = false;
+        await fetchData();
     } catch (error) {
         console.error('Error updating centre:', error);
     }
@@ -103,8 +106,9 @@ const saveEditedCentre = async () => {
 
 const saveEditedProfessor = async () => {
     try {
-        await user.updateUser(editedProfessor.value.id, editedRole.value, editedProfessor.value);
+        await user.saveEditedProfessor(editedProfessor.value);
         editMode.value = false;
+        await fetchData();
     } catch (error) {
         console.error('Error updating professor:', error);
     }
@@ -121,6 +125,8 @@ const saveEditedFormation = async () => {
 
 const cancelEdit = () => {
     formationEditMode.value = false;
+    centreEditMode.value = false;
+    editMode.value = false;
 };
 
 onMounted(fetchData);
@@ -132,7 +138,7 @@ watch(() => route.params, fetchData);
 <template>
     <div class="sign-in-section">
         <h1>List Of {{ role }}</h1>
-        <table v-if="role === 'Professor'" class="table">
+        <table v-if="role === 'professor' || role === 'participant'" class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -150,7 +156,10 @@ watch(() => route.params, fetchData);
                     <td v-if="role === 'Professor' && user.professors.length > 0">{{ user.professors[0].expertise }}</td>
                     <td v-if="role === 'Professor' && user.professors.length > 0">{{ user.professors[0].qualification }}</td>
                     <td>{{ user.email }}</td>
-                    <td>Edit delete</td>
+                    <td>
+                        <button class="deleteBtn" @click="deleteUser(user.id)">Delete</button>
+                        <button class="editBtn" @click="editProf(user , role)">Edit</button>
+                    </td>                
                 </tr>
             </tbody>
         </table>
@@ -175,8 +184,19 @@ watch(() => route.params, fetchData);
             </tr>
         </tbody>
         </table>
+        <div v-if="editMode">
+            <h3>Edit {{ role === "professor" ? "Professor" : "Participant" }}</h3>
+            <form @submit.prevent="saveEditedProfessor">
+                <label for="editName">Name:</label>
+                <input type="text" id="editName" v-model="editedProfessor.name" required>
+                <label for="editAddress">Email:</label>
+                <input type="text" id="editAddress" v-model="editedProfessor.email" required>
+                <button type="submit">Update</button>
+                <button @click="cancelEdit">Cancel</button>
+            </form>
+        </div>
         <div v-if="centreEditMode">
-        <h3>Edit Centre</h3>
+            <h3>Edit Centre</h3>
             <form @submit.prevent="saveEditedCentre">
                 <label for="editName">Name:</label>
                 <input type="text" id="editName" v-model="editingCentre.name" required>
@@ -231,7 +251,7 @@ watch(() => route.params, fetchData);
                     <button type="submit">Save</button>
                 </form>
             </div>
-        </div>
+        </div>
     </div>
 </template>
 

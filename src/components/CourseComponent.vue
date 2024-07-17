@@ -25,20 +25,24 @@ const form = ref({
 
     onMounted(async () => {
     try {
-        await authStore.getUser();
         await Fomation.fetchFormationById(id);
         formation.value = Fomation.formations;
         await Fomation.fetchFormationsByProfessor(formation.value.professor.id);
         CountOfFormations.value = Fomation.formations.length;
-        await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
-        userWithInfo.value = authStore.userWithInfo;
-
-        form.value.participant_id = userWithInfo.value?.participant_info[0]?.id || null;
-        form.value.formation_id = formation.value.id;
-        form.value.amount = formation.value.price;
-        console.log(form.value.participant_id);
-        console.log(form.value.formation_id);
-        console.log(form.value.amount);
+        await authStore.getUser();
+        console.log(authStore.user)
+        if( authStore.user ) {
+            // await authStore.getUserWithInfo(authStore.user.role, authStore.user.id);
+            // userWithInfo.value = authStore.userWithInfo;
+    
+            // form.value.participant_id = userWithInfo.value?.participant_info[0]?.id || null;
+            form.value.user_id = authStore.user.id;
+            form.value.formation_id = formation.value.id;
+            form.value.amount = formation.value.price;
+            console.log(form.value.participant_id);
+            console.log(form.value.formation_id);
+            console.log(form.value.amount);
+        }
     } catch (error) {
         console.error('Error during setup:', error);
     }

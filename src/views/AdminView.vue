@@ -1,24 +1,21 @@
 <script setup>
-import router from "../router";
-
-// import NavBar from '../components/NavBar.vue'
-// import BannerComponent from "../components/BannerComponent.vue" ;
-// import SubscribeComponent from "../components/SubscribeComponent.vue" ;
-// import FooterComponent from "../components/FooterComponent.vue" ;
-import SidebarAdminComponent from "../components/SidebarAdminComponent.vue" ;
-
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+import SidebarAdminComponent from "../components/SidebarAdminComponent.vue";
 import { useAuthStore } from "../stores/counter";
 import { useAdmins } from "../stores/counter";
 
+const router = useRouter();
 const authStore = useAuthStore();
 const admins = useAdmins();
 
 onMounted(async () => {
     try {
         await authStore.getUser();
-        if (!authStore.user) {
+        if (authStore.user.role != "admin") {
             router.push("/login");
+        } else {
+            await admins.fetchprofessors();
         }
     } catch (error) {
         console.error("Error fetching user data:", error);
@@ -26,13 +23,9 @@ onMounted(async () => {
             router.push("/login");
         }
     }
-
-    await admins.fetchprofessors();
 });
-
 </script>
 
-
 <template>
-    <SidebarAdminComponent />
+    <SidebarAdminComponent v-if="authStore.user" />
 </template>
