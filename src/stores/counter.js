@@ -10,13 +10,13 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     authUser: null,
     userWithInfo: null,
-    // authErrors: [],
-    // authStatus: null,
+    error:null
+
   }),
   getters: {
     user: (state) => state.authUser,
-    // errors: (state) => state.authErrors,
-    // status: (state) => state.authStatus,
+    err: (state) => state.error,
+
   },
   actions: {
     async getToken() {
@@ -34,19 +34,15 @@ export const useAuthStore = defineStore("auth", {
       return this.userWithInfo; 
   },
     async handleLogin(data) {
-      // this.authErrors = [];
       await this.getToken();
-
+      
       // try {
-        await axios.post("/login", {
+        const response = await axios.post("/login", {
           email: data.email,
           password: data.password,
         });
-     // } catch (error) {
-      //   if (error.response.status === 422) {
-      //     this.authErrors = error.response.data.errors;
-      //   }
-      // }
+        this.error = response.data.message;
+
     },
     async handleRegister(data) {
       // this.authErrors = [];
@@ -285,8 +281,8 @@ export const useInscriptions = defineStore("inscriptions", {
   }),
   actions: {
     async inscription(form) {
-      const response = await axios.post(`/api/inscriptions`, form);
-      this.inscriptions = response.data;
+      const response = await axios.post(`/api/pay`, form);
+      window.location.href = response.data.redirectUrl;
     },
     async getUsersByFormation( id ) {
       const response = await axios.get(`/api/inscriptions/users/${id}`);
@@ -315,6 +311,7 @@ export const useCentres = defineStore("centres", {
   }
 });
 
+// contact store
 
 export const useContact = defineStore('contact',{
   state: () => ({
@@ -329,5 +326,51 @@ export const useContact = defineStore('contact',{
       this.message = response.data.message;
     }
   }
-})
+});
+
+// cart store
+
+export const useCart = defineStore('cart',{
+  state: () => ({
+    cartItems: [],
+    cartTotal: 0,
+  }),
+  getters: {
+    cart: (state) => state.cartItems,
+    total: (state) => state.cartTotal,
+  },
+  actions: {
+    addToCart(item){
+      let local = localStorage.getItem('cart');
+  
+      let cartItems = local ? JSON.parse(local) : [];
+
+  cartItems.push(item);
+  
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+
+  this.cartItems = cartItems;
+
+  console.log(this.cartItems);
+  // console.log(item);
+    },
+    removeFromCart(id){
+      const storedCart = JSON.parse(localStorage.getItem('cart'));
+      const item = storedCart.find(item => item.formation.id == id)
+      const index =  storedCart.indexOf(item);
+      console.log(storedCart);
+      console.log(item);
+      console.log(index);
+      
+      if (index !== -1) {
+        storedCart.splice(index, 1); 
+    }
+  
+      localStorage.setItem('cart',JSON.stringify(storedCart));
+
+        
+    
+    }
+  }
+});
 

@@ -10,7 +10,7 @@ const form = ref({
     email: "",
     password: "",
 });
-
+const error = ref(null);
 const handleLogin = async () => {
     await authStore.handleLogin(form.value);
     await authStore.getUser();
@@ -26,6 +26,7 @@ const handleLogin = async () => {
             router.push("/admin/");
         }
     }
+    
 };
 </script>
 
@@ -48,6 +49,9 @@ const handleLogin = async () => {
                             <div class="form-group mb-30">
                                 <label class="label-style">Password</label>
                                 <input type="text" v-model="form.password" placeholder="Enter your password" class="bg-white input-style border-style w-100 h-60">
+                            </div>
+                            <div class="mt-3 mb-3" v-if="error">
+                                 <p style="color: red;">{{ authStore.error }}</p>
                             </div>
                             <button type="submit" class="btn style-one w-100 box-shadow-1">Login</button>
                         </form>
